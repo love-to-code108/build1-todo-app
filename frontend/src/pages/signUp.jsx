@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import axios from "axios"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useToast } from '@chakra-ui/react'
 import api from "../Utils/axios";
 
@@ -23,11 +23,14 @@ export const SignUp = () => {
     const[password, setPassword] = useState();
     const[checkPass, setCheckPass] = useState();
 
+
+    // Configuring the toast
     const toast = useToast()
 
 
+
     // when the sign up button is pressed
-    const signUpFunction = () => {
+    const signUpFunction = async() => {
 
         if(password !== checkPass){
             toast({
@@ -43,30 +46,19 @@ export const SignUp = () => {
         }
 
 
-        toast({
-                title: "Passwords match",
-                description: "The password you provided does not match with the password in the confirm password section",
-                status:"success",
-                duration:9000,
-                isClosable:true
-            })
+        // sending data to the backend
+        try{
+            const SignUpRes = await api.post("/signup",{
+                email,
+                password
+            });
+            console.log("Response:", SignUpRes.data);
+        }catch(err){
+            console.log(err)
+        }
 
     }
 
-
-
-
-    // axios
-    useEffect(() => {
-        axios
-        .get("/")
-        .then((res) => {
-            console.log("The backend is listening")
-        })
-        .catch((err) => {
-            console.log("Backend is not listening");
-        })
-    },[])
 
 
 

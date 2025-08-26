@@ -14,8 +14,17 @@ app.use(cors({
 app.use(express.json())
 
 
-app.get('/',(req,res) => {
-    res.send("<h1> Hello World </h1>");
+// app.get('/',(req,res) => {
+//     res.send("<h1> Hello World </h1>");
+// })
+
+app.post('/signup',(req,res) => {
+
+    const {email , password} = req.body;
+    console.log(email,password);
+
+
+    res.send(200);
 })
 
 app.listen( 5000, () => {
