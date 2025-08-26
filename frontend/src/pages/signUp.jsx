@@ -7,21 +7,69 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import axios from "axios"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useToast } from '@chakra-ui/react'
+import api from "../Utils/axios";
+
+
+
+
+
 
 export const SignUp = () => {
+
+    // useState to collect data from the inputs:
+    const[email, setEmail] = useState();
+    const[password, setPassword] = useState();
+    const[checkPass, setCheckPass] = useState();
+
+    const toast = useToast()
+
+
+    // when the sign up button is pressed
+    const signUpFunction = () => {
+
+        if(password !== checkPass){
+            toast({
+                title: "Passwords dont match",
+                description: "The password you provided does not match with the password in the confirm password section",
+                status:"error",
+                duration:9000,
+                isClosable:true,
+                position:"top-right"
+            })
+
+            return;
+        }
+
+
+        toast({
+                title: "Passwords match",
+                description: "The password you provided does not match with the password in the confirm password section",
+                status:"success",
+                duration:9000,
+                isClosable:true
+            })
+
+    }
+
+
+
 
     // axios
     useEffect(() => {
         axios
-        .get("http://localhost:5000/")
+        .get("/")
         .then((res) => {
             console.log("The backend is listening")
         })
         .catch((err) => {
             console.log("Backend is not listening");
         })
-    })
+    },[])
+
+
+
 
 
 
@@ -35,18 +83,32 @@ export const SignUp = () => {
         <Heading fontSize="5xl" marginBottom="2.5rem">Sign Up</Heading>
 
         <FormControl>
+
+
           {/* the Email input */}
           <FormLabel>Email Address</FormLabel>
-          <Input marginBottom="1rem" type="email" placeholder="Email"/>
+          <Input id="SignUpEmail"
+          onChange={(e) => {setEmail(e.target.value)}}
+           marginBottom="1rem" type="email" placeholder="Email"/>
+
+
 
           {/* the Password input */}
           <FormLabel>Password</FormLabel>
-          <Input marginBottom="1rem" type="password" placeholder="Passowrd"/>
+          <Input id="SignUpPassword"
+          onChange={(e) => {setPassword(e.target.value)}}
+           marginBottom="1rem" type="password" placeholder="Passowrd"/>
+
+
 
           {/* the confirm Password input */}
           <FormLabel>Confirm Password</FormLabel>
-          <Input marginBottom="1rem" type="password" placeholder="Password"/>
+          <Input id="SignUpCheckPassword"
+          onChange={(e) => {setCheckPass(e.target.value)}}
+           marginBottom="1rem" type="password" placeholder="Password"/>
         </FormControl>
+
+
 
         {/* flex for the button and Sign In text */}
         <Box marginTop="1rem" w="20rem" className=" flex justify-between">
@@ -55,8 +117,10 @@ export const SignUp = () => {
             <Text>Already have an account </Text>
             <Link to="/SignIn" className=" text-[#3182ce] font-semibold underline">Sign In</Link>
             </Box>
+
+
           {/* the Sign Up button */}
-          <Button size="lg">Sign Up</Button>
+          <Button onClick={signUpFunction} size="lg">Sign Up</Button>
         </Box>
       </Box>
     </div>
