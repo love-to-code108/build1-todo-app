@@ -36,16 +36,16 @@ export const SignUp = () => {
 
         <FormControl>
           {/* the Email input */}
-          <FormLabel>Email Adress</FormLabel>
-          <Input marginBottom="1rem" type="email" />
+          <FormLabel>Email Address</FormLabel>
+          <Input marginBottom="1rem" type="email" placeholder="Email"/>
 
           {/* the Password input */}
           <FormLabel>Password</FormLabel>
-          <Input marginBottom="1rem" type="password" />
+          <Input marginBottom="1rem" type="password" placeholder="Passowrd"/>
 
           {/* the confirm Password input */}
           <FormLabel>Confirm Password</FormLabel>
-          <Input marginBottom="1rem" type="password" />
+          <Input marginBottom="1rem" type="password" placeholder="Password"/>
         </FormControl>
 
         {/* flex for the button and Sign In text */}
@@ -53,7 +53,7 @@ export const SignUp = () => {
           {/* the Sign In text */}
           <Box fontSize="sm">
             <Text>Already have an account </Text>
-            <Link to="/SignIn" className=" text-[#052099] font-semibold underline">Sign In</Link>
+            <Link to="/SignIn" className=" text-[#3182ce] font-semibold underline">Sign In</Link>
             </Box>
           {/* the Sign Up button */}
           <Button size="lg">Sign Up</Button>
