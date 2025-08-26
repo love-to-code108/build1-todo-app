@@ -1,0 +1,12 @@
+Ok so the reason i made this text file is to take notes that i feel like is useless or important :
+
+Utils : Primary Building blocks or primary level functions that could be basically used anywhere and every where.
+Lets take an example of an input function.
+The only job of an input function is to take the input from the input box and return it. { that is a good example of an util function }
+
+
+
+## My findings :
+ok you know lets not go in depth with chakra lets just simply build and then later we chan do all the color and design related changes.
+
+all i need to make sure is that whatever i am building right now is so simple that it can be easily changed later on.
