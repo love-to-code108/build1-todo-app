@@ -40,19 +40,26 @@ app.post('/signup',async(req,res) => {
     });
 
     
-    // Throwing error if the email already exists
+    // checking if the email already exists
     try{
-       await newUser.save();
+    const userExists = await User.findOne({email:email})
 
-    }catch(err) {
-        // console.log("Email Already Exists: ",err);
+    // if user doesnot exists
+    if(userExists === null ){
+        await newUser.save()
+        res.send("New user created");
+    }
+    
+    else if(userExists !== null){
+
+        // if user already exists
         res.send("Email Already Exists")
     }
 
-    
-    
-    console.log("Data Saved to DB")
-    res.send(200);
+    }catch(err){
+        console.log(err);
+    }
+
 })
 
 

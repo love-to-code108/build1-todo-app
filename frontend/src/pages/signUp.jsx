@@ -5,7 +5,7 @@ import {
   FormErrorMessage,
   FormHelperText,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
 import { useState } from "react";
 import { useToast } from '@chakra-ui/react'
@@ -26,6 +26,9 @@ export const SignUp = () => {
 
     // Configuring the toast
     const toast = useToast()
+
+
+    const navigate = useNavigate();
 
 
 
@@ -55,7 +58,7 @@ export const SignUp = () => {
 
 
             // updating response based on the backends reply
-            if(signUpRes.data == 200){
+            if(signUpRes.data == "New user created"){
               toast({
                 title: "Account Created",
                 description: "Your account has been created sucessfully",
@@ -64,6 +67,10 @@ export const SignUp = () => {
                 isClosable:true,
                 position:"top-right"
             })
+
+            navigate("/signin")
+
+
             }
 
 
