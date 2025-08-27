@@ -134,7 +134,7 @@ export const SignUp = () => {
           {/* the Sign In text */}
           <Box fontSize="sm">
             <Text>Already have an account </Text>
-            <Link to="/SignIn" className=" text-[#3182ce] font-semibold underline">Sign In</Link>
+            <Link to="/signin" className=" text-[#3182ce] font-semibold underline">Sign In</Link>
             </Box>
 
 

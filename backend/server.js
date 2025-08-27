@@ -24,14 +24,15 @@ app.use(express.json())
 // connecting to database
 connectDB();
 
-// app.get('/',(req,res) => {
-//     res.send("<h1> Hello World </h1>");
-// })
 
+
+
+
+
+// the signup route
 app.post('/signup',async(req,res) => {
 
-    const {email , password} = req.body;
-    console.log(`email: ${email}, \npassword: ${password}`);
+    const {email , password} = req.body;    
 
     const newUser = new User({
         email:email,
@@ -53,6 +54,62 @@ app.post('/signup',async(req,res) => {
     console.log("Data Saved to DB")
     res.send(200);
 })
+
+
+
+
+
+
+
+
+// the sign in route
+app.post("/signin", async(req,res) => {
+
+    // receiving the data and converting it to variables
+    const {email , password} = req.body;
+
+
+    try{
+    // searching for the user in the db
+    const user = await User.findOne({email});
+
+    // if user is not found
+    if(!user){
+        return res.send({message:"User not found"});
+    }
+
+    // if user is found matching password
+    if(user.password !== password){
+        return res.json({message:"Invalid Credentials"})
+    }
+
+    // if user email and password match with db
+    res.json({message:"Login Sucessful", userOBJ:user})
+
+    }catch(err){
+        console.log(err);
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen( 5000, () => {
     console.log("Server Running")
