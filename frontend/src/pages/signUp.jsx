@@ -48,11 +48,33 @@ export const SignUp = () => {
 
         // sending data to the backend
         try{
-            const SignUpRes = await api.post("/signup",{
+            const signUpRes = await api.post("/signup",{
                 email,
                 password
             });
-            console.log("Response:", SignUpRes.data);
+            if(signUpRes.data == 200){
+              toast({
+                title: "Account Created",
+                description: "Your account has been created sucessfully",
+                status:"success",
+                duration:9000,
+                isClosable:true,
+                position:"top-right"
+            })
+            }
+
+            else if (signUpRes.data == "Email Already Exists"){
+              toast({
+                title: "Email Already Exist",
+                description: "There is already and existing account with this email please try to Sign In",
+                status:"error",
+                duration:9000,
+                isClosable:true,
+                position:"top-right"
+            })
+            }
+
+
         }catch(err){
             console.log(err)
         }

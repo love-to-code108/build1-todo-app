@@ -5,6 +5,7 @@ Backend Dependencies :
 4. mongoose
 5. nodemon (--save-dev)
 
+
 Frontend Dependencies :
 1. chakra ui
 2. react-router-dom

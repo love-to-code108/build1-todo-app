@@ -1,12 +1,19 @@
 import express from "express"
 import cors from "cors"
-const FRONTEND_URL = "http://localhost:5173"
+import dotenv from "dotenv"
+
+// db related
+import connectDB from "./DB/connectDB.js";
+import User from "./DB/userSchema.js";
+
+
+dotenv.config()
 
 const app = express();
 
 // allowing the specific urls
 app.use(cors({
-    origin:FRONTEND_URL
+    origin:process.env.FRONTEND_URL
 }))
 
 
@@ -14,16 +21,36 @@ app.use(cors({
 app.use(express.json())
 
 
+// connecting to database
+connectDB();
+
 // app.get('/',(req,res) => {
 //     res.send("<h1> Hello World </h1>");
 // })
 
-app.post('/signup',(req,res) => {
+app.post('/signup',async(req,res) => {
 
     const {email , password} = req.body;
-    console.log(email,password);
+    console.log(`email: ${email}, \npassword: ${password}`);
 
+    const newUser = new User({
+        email:email,
+        password:password
+    });
 
+    
+    // Throwing error if the email already exists
+    try{
+       await newUser.save();
+
+    }catch(err) {
+        // console.log("Email Already Exists: ",err);
+        res.send("Email Already Exists")
+    }
+
+    
+    
+    console.log("Data Saved to DB")
     res.send(200);
 })
 
