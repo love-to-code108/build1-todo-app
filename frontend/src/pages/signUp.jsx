@@ -52,6 +52,9 @@ export const SignUp = () => {
                 email,
                 password
             });
+
+
+            // updating response based on the backends reply
             if(signUpRes.data == 200){
               toast({
                 title: "Account Created",
@@ -63,6 +66,8 @@ export const SignUp = () => {
             })
             }
 
+
+            // updating response based on the backends reply
             else if (signUpRes.data == "Email Already Exists"){
               toast({
                 title: "Email Already Exist",
@@ -92,7 +97,7 @@ export const SignUp = () => {
   return (
     <div className=" w-[100%] h-[100vh] flex justify-center items-center">
       {/* the sign up box in the middle */}
-      <Box border="2px" borderRadius="md" padding="12">
+      <Box border="2px" borderColor="#A4A3A3" borderRadius="md" padding="12">
         {/* the Sign Up Heading */}
         <Heading fontSize="5xl" marginBottom="2.5rem">Sign Up</Heading>
 
@@ -134,7 +139,9 @@ export const SignUp = () => {
 
 
           {/* the Sign Up button */}
-          <Button onClick={signUpFunction} size="lg">Sign Up</Button>
+          <Button
+          _hover={{ bg: '#2D2D2D' , color:"white" }}
+            borderRadius="4px" onClick={signUpFunction} size="lg">Sign Up</Button>
         </Box>
       </Box>
     </div>
