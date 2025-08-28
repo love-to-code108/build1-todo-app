@@ -1,4 +1,4 @@
-import { Button, Box, Heading, Input, Flex, Text, position } from "@chakra-ui/react";
+import { Button, Box, Heading, Input, Flex, Text } from "@chakra-ui/react";
 import {
   FormControl,
   FormLabel,
@@ -6,10 +6,12 @@ import {
   FormHelperText,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"
+// import axios from "axios"
 import { useState } from "react";
 import { useToast } from '@chakra-ui/react'
 import api from "../Utils/axios";
+import { useSetRecoilState } from "recoil";
+import { User } from "../Utils/atoms";
 
 
 
@@ -18,12 +20,14 @@ import api from "../Utils/axios";
 
 export const SignIn = () => {
 
+    const setUser = useSetRecoilState(User);
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
     const toast = useToast();
 
     const navigate = useNavigate();
+
 
 
 
@@ -38,6 +42,8 @@ export const SignIn = () => {
                 password
             })
             
+            console.log(signInResponse);
+
             // responding as per the data we got back
             if(signInResponse.data.message === "User not found"){
                 toast({
@@ -65,9 +71,10 @@ export const SignIn = () => {
                 return;
             }
 
-            
+
             // navigating to the home page
-            navigate("/home");
+            setUser(signInResponse.data.userOBJ);
+            navigate("/home", {replace:true});
                     
 
 

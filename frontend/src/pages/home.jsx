@@ -21,8 +21,8 @@ function Home() {
   const lastDayofMonth = endOfMonth(currentDate);
   const daysInMonth = getDaysInMonth(currentDate);
   const startWeekday = getDay(firstDayOfMonth);
-  const endweekDay = getDay(lastDayofMonth); 
-  console.log(endweekDay)
+  const endWeekDay = getDay(lastDayofMonth); 
+  console.log(endWeekDay)
 
   // build calendar grid
   const days = [];
@@ -38,7 +38,7 @@ function Home() {
   }
 
     //  ending blanks
-    for(let i = endweekDay; i<6 ; i++ ){
+    for(let i = endWeekDay; i<6 ; i++ ){
         days.push(null);
     }
 
@@ -70,7 +70,7 @@ function Home() {
       </Grid>
 
       {/* Calendar days */}
-      <Grid templateColumns="repeat(7, 1fr)" gap={1}>
+      <Grid templateColumns="repeat(7, 1fr)">
         {days.map((day, idx) => {
             
             console.log(idx)
@@ -81,7 +81,7 @@ function Home() {
             h="6rem"
             padding="4px"
             border="1px solid #e2e8f0"
-            borderRadius="3px"
+            
             display="flex"
             alignItems="start"
             justifyContent="start"
