@@ -72,6 +72,18 @@ export const SignIn = () => {
             }
 
 
+            // sigin sucessful
+            toast({
+                    title:"Login Successful",
+                    description:"You have successfully logged in ",
+                    status:"success",
+                    isClosable:"true",
+                    position:"top-right",
+                    duration:1000
+                })
+
+
+
             // navigating to the home page
             setUser(signInResponse.data.userOBJ);
             navigate("/home", {replace:true});
@@ -113,7 +125,7 @@ export const SignIn = () => {
           <FormLabel>Password</FormLabel>
           <Input id="SignUpPassword"
           onChange={(e) => {setPassword(e.target.value)}}
-           marginBottom="1rem" type="password" placeholder="Passowrd"/>
+           marginBottom="1rem" type="password" placeholder="Password"/>
 
 
         </FormControl>

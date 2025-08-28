@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Grid, Text, Button, Flex } from "@chakra-ui/react";
+import { Box, Grid, Text, Button, Flex, IconButton } from "@chakra-ui/react";
 import {
   startOfMonth,
   getDaysInMonth,
@@ -9,6 +9,7 @@ import {
   subMonths,
   endOfMonth,
 } from "date-fns";
+import {ChevronLeft, ChevronRight} from "lucide-react"
 
 function Home() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -46,18 +47,45 @@ function Home() {
 
 
   return (
-    <Box p={4}>
+    <Flex width="100vw" height="100vh" backgroundColor="">
+      <Flex width="20%">
+
+      </Flex>
+
+
+
+
+      {/* the calander */}
+    <Box p={4} width="80%" height="100%">
       {/* Header with navigation */}
-      <Flex justify="space-between" align="center" mb={4}>
-        <Button onClick={() => setCurrentDate(subMonths(currentDate, 1))}>
-          Prev
-        </Button>
+      <Flex align="center" mb="2.5rem">
+
+        <Flex>
+        {/* previous month */}
+        <IconButton 
+        marginRight="1rem"
+        icon={<ChevronLeft/>}
+        borderRadius="100%"
+        variant="outline"
+        onClick={() => setCurrentDate(subMonths(currentDate, 1))}>
+          {"<"}
+        </IconButton>
+
+        {/* next month */}
+        <IconButton 
+        icon={<ChevronRight/>}
+        marginRight="1rem"
+        variant="outline"
+        borderRadius="100%"
+        onClick={() => setCurrentDate(addMonths(currentDate, 1))}>
+          {">"}
+        </IconButton>
+        </Flex>
+
+        {/* the month and year */}
         <Text fontSize="xl" fontWeight="bold">
           {format(currentDate, "MMMM yyyy")}
         </Text>
-        <Button onClick={() => setCurrentDate(addMonths(currentDate, 1))}>
-          Next
-        </Button>
       </Flex>
 
       {/* Weekday labels */}
@@ -70,7 +98,7 @@ function Home() {
       </Grid>
 
       {/* Calendar days */}
-      <Grid templateColumns="repeat(7, 1fr)">
+      <Grid templateColumns="repeat(7, 1fr)" >
         {days.map((day, idx) => {
             
             console.log(idx)
@@ -78,7 +106,7 @@ function Home() {
             return(
           <Box
             key={idx}
-            h="6rem"
+            h="8.5rem"
             padding="4px"
             border="1px solid #e2e8f0"
             
@@ -98,6 +126,7 @@ function Home() {
         )})}
       </Grid>
     </Box>
+    </Flex>
   );
 }
 
