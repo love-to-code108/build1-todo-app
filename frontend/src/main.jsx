@@ -14,12 +14,12 @@ import "@fontsource/inter/700.css"; // bold
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RecoilRoot>
+    <BrowserRouter>
       <ChakraProvider theme={theme}>
-        <BrowserRouter>
+        <RecoilRoot>
           <App />
-        </BrowserRouter>
+        </RecoilRoot>
       </ChakraProvider>
-    </RecoilRoot>
+    </BrowserRouter>
   </StrictMode>
 );
