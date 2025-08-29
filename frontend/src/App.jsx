@@ -1,10 +1,15 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { SignUp } from "./pages/signUp.jsx";
 import { SignIn } from "./pages/signIn.jsx";
-import Home from "./pages/home.jsx";
+// import Home from "./pages/home.jsx";
 import Blank from "./pages/blank.jsx";
-import { useRecoilValue } from "recoil"
-import { User } from "./Utils/atoms.js";
+import Home2 from "./pages/home2.jsx";
+import NavbarHomePage from "./components/navbarHome.jsx";
+import Calander from "./components/calander.jsx";
+import Inbox from "./components/inbox.jsx"
+import Guest from "./components/guest.jsx"
+import VehicleStatus from "./components/vehicleStatus.jsx"
+
 
 
 
@@ -12,16 +17,24 @@ import { User } from "./Utils/atoms.js";
 
 
 function App() {
-  
-  const user = useRecoilValue(User)
-  
+
+
+
+
 
   return (
-    <div>
+    <div className=" flex w-[100vw] h-[100vh] bg-red-300">
+
+      
+      <NavbarHomePage />
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/home" element={user == null ? <Navigate to="/signin" replace/> : <Home />} />
+        <Route path="/home" element={<Home2 />} />
+        <Route path="/calander" element={<Calander />} />
+        <Route path="/inbox" element={<Inbox />} />
+        <Route path="/guest" element={<Guest />} />
+        <Route path="/vehiclestatus" element={<VehicleStatus />} />
       </Routes>
     </div>
   );

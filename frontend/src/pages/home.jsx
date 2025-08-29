@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Grid, Text, Button, Flex, IconButton } from "@chakra-ui/react";
+import { Box, Grid, Text, Button, Flex, IconButton, Center } from "@chakra-ui/react";
 import {
   startOfMonth,
   getDaysInMonth,
@@ -47,10 +47,58 @@ function Home() {
 
 
   return (
-    <Flex width="100vw" height="100vh" backgroundColor="">
-      <Flex width="20%">
+    <Flex width="100vw" height="100vh" backgroundColor="" paddingLeft="1rem">
+
+
+      {/* navigation */}
+      <Flex width="20%" height="84.5%" backgroundColor="" flexDirection="column" justify="start" align="center" marginTop="8rem"  >
+
+
+        {/* calander */}
+        <Flex fontSize="xl" justify="start" border="solid 1px #e2e8f0" align="center" padding="2px" paddingLeft="8px" marginBottom="" width="100%" height="3rem" backgroundColor="gray.50"
+        
+        _hover={{ bg: '#ebedf0' }}
+        _active={{
+          bg: 'black',
+          borderColor: '#bec3c9',
+        }}
+        _focus={{
+          boxShadow:
+            '',
+        }}
+
+        cursor="pointer"
+        userSelect="none"
+
+        onClick={{backgroundColor : "black"}}
+        
+        >Calander</Flex>
+
+        {/* inbox */}
+        <Flex fontSize="xl" justify="start" align="center" padding="2px" border="solid 1px #e2e8f0" paddingLeft="8px" marginBottom="" width="100%" height="3rem" backgroundColor="gray.50"
+        _hover={{ bg: '#ebedf0' }}
+        
+        >Inbox</Flex>
+
+        {/* guest */}
+        <Flex fontSize="xl" justify="start" align="center" padding="2px" border="solid 1px #e2e8f0" marginBottom="" paddingLeft="8px"
+         width="100%" height="3rem" backgroundColor="gray.50"
+         _hover={{ bg: '#ebedf0' }}
+         
+         >Guest</Flex>
+
+        {/* vehicle status */}
+        <Flex fontSize="xl" justify="start" align="center" padding="2px" border="solid 1px #e2e8f0" marginBottom="" paddingLeft="8px"
+        width="100%" height="3rem" backgroundColor="gray.50"
+        _hover={{ bg: '#ebedf0' }}
+        
+        >Vehicle Status</Flex>
 
       </Flex>
+
+
+
+
 
 
 
@@ -114,6 +162,7 @@ function Home() {
             alignItems="start"
             justifyContent="start"
             bg={day ? "gray.50" : "transparent"}
+            _hover={day && { bg: '#ebedf0' }}
           >
             {day && (
               <Text fontSize="sm" fontWeight="medium">
