@@ -4,6 +4,12 @@ import { SignIn } from "./pages/signIn.jsx";
 // import Home from "./pages/home.jsx";
 import Blank from "./pages/blank.jsx";
 import Home2 from "./pages/home2.jsx";
+import NavbarHomePage from "./components/navbarHome.jsx";
+import Calander from "./components/calander.jsx";
+import Inbox from "./components/inbox.jsx"
+import Guest from "./components/guest.jsx"
+import VehicleStatus from "./components/vehicleStatus.jsx"
+
 
 
 
@@ -11,15 +17,24 @@ import Home2 from "./pages/home2.jsx";
 
 
 function App() {
-  
+
+
+
 
 
   return (
-    <div>
+    <div className=" flex w-[100vw] h-[100vh] bg-red-300">
+
+      
+      <NavbarHomePage />
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/home" element={<Home2/>}/>
+        <Route path="/home" element={<Home2 />} />
+        <Route path="/calander" element={<Calander />} />
+        <Route path="/inbox" element={<Inbox />} />
+        <Route path="/guest" element={<Guest />} />
+        <Route path="/vehiclestatus" element={<VehicleStatus />} />
       </Routes>
     </div>
   );
