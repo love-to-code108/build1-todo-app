@@ -1,4 +1,4 @@
-import { Box , Text, useDisclosure , Button } from "@chakra-ui/react";
+import { Box , Text, useDisclosure , Button, Input, Textarea, InputGroup, InputLeftAddon, Select  } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -9,11 +9,37 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+} from '@chakra-ui/react'
+
+import { useRef } from "react";
+
 const CalanderCells = ({value , keyIndex}) => {
 
 
     // trying to understand the modal
     const { isOpen , onOpen , onClose } = useDisclosure()
+
+
+    // all the useRefs for the form
+    const eventName = useRef(null);
+    const eventDescription = useRef(null);
+    const eventDate = useRef(null);
+    const eventStartTime = useRef(null);
+    const eventVenue = useRef(null);
+    const orgName = useRef(null);
+    const orgContact = useRef(null);
+
+
+    // event creation form funciton
+    const submitEventCreationForm = () => {
+
+        console.log(eventName.current.value);
+    }
 
     
 
@@ -45,23 +71,75 @@ const CalanderCells = ({value , keyIndex}) => {
 
 
     {/* The modal */}
-      <Modal isOpen={isOpen} onClose={onClose}>
+    { value.dayNumber && 
+      <Modal 
+      size="xl"
+      isCentered
+      isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom'>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add Event</ModalHeader>
+          <ModalHeader fontSize="3xl">Create New Event</ModalHeader>
           <ModalCloseButton />
+
+          {/* the form inside the modal */}
           <ModalBody>
-            This is my 2nd try at this
+            <FormControl isRequired>
+
+
+                {/* Event Name */}
+                <FormLabel>Event Name</FormLabel>
+                <Input ref={eventName} marginBottom="1rem" placeholder="Name of the event" type="text"/>
+
+
+                {/* Description */}
+                <FormLabel>Description</FormLabel>
+                <Textarea ref={eventDescription} marginBottom="1rem" placeholder="Description of the Event" resize="vertical"/>
+
+
+                {/* Date of Event*/}
+                <FormLabel>Date</FormLabel>
+                <Input ref={eventDate} marginBottom="1rem" type="date"/>
+
+
+                {/*Start Time of Event */}
+                <FormLabel>Start Time</FormLabel>
+                <Input ref={eventStartTime} marginBottom="1rem" placeholder="9:00AM" type="time"/>
+
+
+
+                {/* Venu */}
+                <FormLabel>Venue </FormLabel>
+                <Select ref={eventVenue} marginBottom="1rem" >
+                    <option>Basement Seminar Hall</option>
+                    <option>First Floor Seminar Hall</option>
+                    <option>Mini Seminar Hall</option>
+                </Select>
+
+
+                {/* Organization Name */}
+                <FormLabel>Organization Name</FormLabel>
+                <Input ref={orgName} marginBottom="1rem"  type="text"/>
+
+
+                {/* Organization Contact Info  */}
+                <FormLabel>Organization Contact Number</FormLabel>
+                <InputGroup margin>
+                    <InputLeftAddon>+91</InputLeftAddon>
+                    <Input ref={orgContact} placeholder="Phone Number" type="number"/>
+                </InputGroup>
+
+            </FormControl>
           </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
+          <ModalFooter >
+            <Button onClick={submitEventCreationForm} variant="black">
+              Submit
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
+            
           </ModalFooter>
         </ModalContent>
       </Modal>
+    }
     </>
   );
 };
