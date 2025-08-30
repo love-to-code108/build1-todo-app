@@ -108,6 +108,21 @@ app.post("/signin", async(req,res) => {
 
 
 
+// the event creation form
+app.post("/eventcreation" , async(req,res) => {
+
+    console.log(req.body);
+    res.send(200);
+})
+
+
+
+
+
+
+
+
+
 
 
 

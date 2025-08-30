@@ -18,6 +18,11 @@ import {
 
 import { useRef } from "react";
 
+import api from "../Utils/axios";
+
+
+
+
 const CalanderCells = ({value , keyIndex}) => {
 
 
@@ -39,7 +44,7 @@ const CalanderCells = ({value , keyIndex}) => {
 
 
     // event creation form funciton
-    const submitEventCreationForm = () => {
+    const submitEventCreationForm = async() => {
 
         console.log(eventName.current.value)
 
@@ -125,6 +130,48 @@ const CalanderCells = ({value , keyIndex}) => {
 
 
 
+        // sending the form data to the backend
+
+        const eventCreationFormData = {
+
+            eventName:eventName.current.value,
+            eventDescription:eventDescription.current.value,
+            eventDate:eventDate.current.value,
+            eventStartTime:eventStartTime.current.value,
+            eventVenue:eventVenue.current.value,
+            orgName:orgName.current.value,
+            orgContact:orgContact.current.value
+        }
+
+
+        try{
+
+            // sending data to the backend
+            const eventCreationFormResponse = await api.post("/eventcreation" , eventCreationFormData )
+
+
+        }catch(err){
+            console.log(err);
+        }
+
+
+
+
+
+
+
+
+        toast({
+                title: "Event Successfully Scheduled",
+                description: "Your event has been successfully scheduled and is now awaiting review.",
+                status:"success",
+                isClosable: true,
+                position:"top-right"
+            })
+
+
+
+            return;
 
 
     }
