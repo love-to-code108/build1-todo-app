@@ -9,7 +9,6 @@ const theme = extendTheme({
     styles: {
     global: {
       "*:focus": {
-        boxShadow: "0 0 0 1px black !important", // black outline globally
         borderColor: "black !important",
       },
     },

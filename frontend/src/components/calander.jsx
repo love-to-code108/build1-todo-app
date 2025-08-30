@@ -38,7 +38,7 @@ const Calander = () => {
   }
 
 
-              console.log(days);
+    //  console.log(days);
 
 
 
