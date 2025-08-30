@@ -23,7 +23,7 @@ function App() {
 
 
   return (
-    <div className=" flex w-[100vw] h-[100vh] bg-red-300">
+    <div className=" flex w-[100vw] h-[100vh]">
 
       
       <NavbarHomePage />
