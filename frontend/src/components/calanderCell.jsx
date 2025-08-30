@@ -1,4 +1,4 @@
-import { Box , Text, useDisclosure , Button, Input, Textarea, InputGroup, InputLeftAddon, Select  } from "@chakra-ui/react";
+import { Box , Text, useDisclosure , Button, Input, Textarea, InputGroup, InputLeftAddon, Select, useToast  } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -34,11 +34,99 @@ const CalanderCells = ({value , keyIndex}) => {
     const orgName = useRef(null);
     const orgContact = useRef(null);
 
+    // init toast 
+    const toast = useToast()
+
 
     // event creation form funciton
     const submitEventCreationForm = () => {
 
-        console.log(eventName.current.value);
+        console.log(eventName.current.value)
+
+        if(eventName.current.value == ""){
+
+            toast({
+                title: "Missing Event Name",
+                description: "Please enter the name of the event before submitting.",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }else if(eventDescription.current.value == ""){
+
+            toast({
+                title: "Add Event Description",
+                description: "A short description helps others understand the purpose of the event.",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+
+        }else if(eventDate.current.value == ""){
+
+            toast({
+                title: "Invalid Date",
+                description: "Please select a valid date for the event.",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }else if(eventStartTime.current.value == ""){
+
+            toast({
+                title: "Missing Start Time",
+                description: "Don’t forget to add when the event will begin.",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }else if(eventVenue.current.value == ""){
+
+            toast({
+                title: "Select Venue",
+                description: "Please choose a seminar hall for the event.",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }else if(orgName.current.value == ""){
+
+            toast({
+                title: "Organization Required",
+                description: "Enter the name of the organizing club or department.",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }else if(orgContact.current.value == ""){
+
+            toast({
+                title: "Contact Info Missing",
+                description: "Provide a valid contact number for coordination.",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }
+
+
+
+
+
     }
 
     
