@@ -1,26 +1,31 @@
-import { Box , Text } from "@chakra-ui/react";
+import { Box , Text, useDisclosure , Button } from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 
 const CalanderCells = ({value , keyIndex}) => {
 
 
-    const whenClicking = () => {
+    // trying to understand the modal
+    const { isOpen , onOpen , onClose } = useDisclosure()
 
-
-        console.log(value);
-    }
-
+    
 
 
 
 
 
   return (
+    <>
     <Box
       
-      onClick={whenClicking}
-
-
-
+      onClick={onOpen}
       h=""
       padding="4px"
       border="1px solid #e2e8f0"
@@ -36,6 +41,28 @@ const CalanderCells = ({value , keyIndex}) => {
         </Text>
       )}
     </Box>
+
+
+
+    {/* The modal */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add Event</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            This is my 2nd try at this
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant='ghost'>Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
