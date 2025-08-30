@@ -9,7 +9,7 @@ const NavbarHomePage = () => {
 
 
     const location = useLocation()
-    console.log(location);
+    // console.log(location);
     const [display,setDisplay] = useState();
 
     useEffect(() =>{

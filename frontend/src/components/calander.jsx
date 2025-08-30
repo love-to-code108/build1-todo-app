@@ -10,37 +10,80 @@ import {
   endOfMonth,
 } from "date-fns";
 import {ChevronLeft, ChevronRight} from "lucide-react"
+import CalanderCells from "./calanderCell";
 
-function Calander() {
+const Calander = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
 //   console.log(currentDate);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
+  console.log(month);
 
   const firstDayOfMonth = startOfMonth(currentDate);
   const lastDayofMonth = endOfMonth(currentDate);
   const daysInMonth = getDaysInMonth(currentDate);
   const startWeekday = getDay(firstDayOfMonth);
   const endWeekDay = getDay(lastDayofMonth); 
-  console.log(endWeekDay)
+  // console.log(endWeekDay)
 
   // build calendar grid
   const days = [];
 
+  // calander cell object
+  const calanderCellObj = {
+    dayNumber:null,
+    monthNumber:null,
+    year:null
+  }
+
+
+              console.log(days);
+
+
+
     // leading blanks
   for (let i = 0; i < startWeekday; i++) {
-    days.push(null);
+
+    const calanderCellObj = {
+    dayNumber:null,
+    monthNumber:null,
+    year:null
   }
+    
+
+    days.push(calanderCellObj);
+  }
+
+
 
     // days of this month
   for (let d = 1; d <= daysInMonth; d++) {
-    days.push(d);
+    
+    const calanderCellObj = {
+    dayNumber:d,
+    monthNumber:month + 1,
+    year:year + 1,
   }
+    
+
+    days.push(calanderCellObj);
+
+  }
+
+
 
     //  ending blanks
     for(let i = endWeekDay; i<6 ; i++ ){
-        days.push(null);
+
+    const calanderCellObj = {
+    dayNumber:null,
+    monthNumber:null,
+    year:null
+  }
+    
+    
+    days.push(calanderCellObj);
     }
 
 
@@ -92,34 +135,27 @@ function Calander() {
         ))}
       </Grid>
 
+
+
+
+
+
+
+
+
+
+
+
+
       {/* Calendar days */}
       <Grid templateColumns="repeat(7, 1fr)" height="85%" >
-        {days.map((day, idx) => {
-            
-            console.log(idx)
-            
+        {days.map((value, keyIndex) => {  
+          
+          // console.log(value)
             return(
-          <Box
-            key={idx}
-            h=""
-            padding="4px"
-            border="1px solid #e2e8f0"
-            
-            display="flex"
-            alignItems="start"
-            justifyContent="start"
-            bg={day ? "gray.50" : "transparent"}
-            _hover={day && { bg: '#ebedf0' }}
-          >
-            {day && (
-              <Text fontSize="sm" fontWeight="medium">
-                {day}
-              </Text>
-            )}
-          </Box>
+          <CalanderCells key={keyIndex} keyIndex={keyIndex} value={value}/>
 
-
-        )})}
+          )})}
       </Grid>
     </Box>
     </Flex>

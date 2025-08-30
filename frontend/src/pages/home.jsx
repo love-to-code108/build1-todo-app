@@ -15,8 +15,8 @@ function Home() {
   const [currentDate, setCurrentDate] = useState(new Date());
 //   console.log(currentDate);
 
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
+  // const year = currentDate.getFullYear();
+  // const month = currentDate.getMonth();
 
   const firstDayOfMonth = startOfMonth(currentDate);
   const lastDayofMonth = endOfMonth(currentDate);

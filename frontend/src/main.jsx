@@ -13,7 +13,7 @@ import "@fontsource/inter/500.css"; // medium
 import "@fontsource/inter/700.css"; // bold
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <ChakraProvider theme={theme}>
         <RecoilRoot>
@@ -21,5 +21,5 @@ createRoot(document.getElementById("root")).render(
         </RecoilRoot>
       </ChakraProvider>
     </BrowserRouter>
-  </StrictMode>
+  // </StrictMode>
 );

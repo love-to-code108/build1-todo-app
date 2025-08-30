@@ -7,6 +7,6 @@ const theme = extendTheme({
     }
 })
 
-console.log(theme.fonts);
+// console.log(theme.fonts);
 
 export default theme;
