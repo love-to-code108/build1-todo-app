@@ -68,7 +68,8 @@ const Calander = () => {
         console.log(err);
       }
 
-      setEventList(eventListResponse);
+      console.log(eventListResponse.data);
+      setEventList(eventListResponse.data);
 
     }
 

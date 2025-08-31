@@ -156,14 +156,23 @@ app.post("/eventcreation" , async(req,res) => {
 // getting all the events
 app.post("/getallevents" , async(req,res) => {
 
-    console.log(req.body);
+    // console.log(req.body);
     // return;
 
 
-    const { month , year } = req.body;
-    console.log("month",month);
+    const { stringMonth , stringYear } = req.body;
+    // console.log("month",stringYear);
+    const month = stringMonth;
+    const year = stringYear;
+    console.log(month,year)
+    const eventArray = await event.find({ 
+        eventMonth:month ,
+        eventYear:year
+    });
 
-    res.send(200);
+    console.log(eventArray);
+
+    res.send(eventArray);
 
 
 })

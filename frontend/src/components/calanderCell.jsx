@@ -135,8 +135,8 @@ const CalanderCells = ({value , keyIndex}) => {
 
         const fullEventdate = eventDate.current.value
         const year = fullEventdate.slice(0,4)
-        const day = String(Number(fullEventdate.slice(5,7)));
-        const month = fullEventdate.slice(8);
+        const month = String(Number(fullEventdate.slice(5,7) - 1));
+        const day = String(Number(fullEventdate.slice(8) - 1 ));
         // console.log(day)
 
 
