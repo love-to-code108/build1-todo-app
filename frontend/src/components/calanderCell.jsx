@@ -56,7 +56,6 @@ const CalanderCells = ({value , keyIndex}) => {
     // event creation form funciton
     const submitEventCreationForm = async() => {
 
-        console.log(eventName.current.value)
 
         if(eventName.current.value == ""){
 
@@ -207,7 +206,6 @@ const CalanderCells = ({value , keyIndex}) => {
               console.log(err);
             }
             
-            console.log(eventListResponse.data);
             setEventList(eventListResponse.data);
 
 

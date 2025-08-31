@@ -153,7 +153,7 @@ app.post("/eventcreation" , async(req,res) => {
 
 
 
-// getting all the events
+// getting all the events filtered by month and year
 app.post("/getallevents" , async(req,res) => {
 
     // console.log(req.body);
@@ -175,6 +175,22 @@ app.post("/getallevents" , async(req,res) => {
     res.send(eventArray);
 
 
+})
+
+
+
+
+
+
+
+
+
+
+// getting all the events for the inbox
+app.get("/inbox", async(req,res) => {
+
+    const eventList = await event.find({ approved : false});
+    res.send(eventList);
 })
 
 

@@ -26,18 +26,15 @@ import { useRecoilState } from "recoil";
 
 const Calander = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-//   console.log(currentDate);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
-  // console.log(month);
 
   const firstDayOfMonth = startOfMonth(currentDate);
   const lastDayofMonth = endOfMonth(currentDate);
   const daysInMonth = getDaysInMonth(currentDate);
   const startWeekday = getDay(firstDayOfMonth);
   const endWeekDay = getDay(lastDayofMonth); 
-  // console.log(endWeekDay)
 
 
   // init the atom containing the array of all events
@@ -63,7 +60,6 @@ const Calander = () => {
       const stringYear = year.toString()
       setCurrentMonth(stringMonth)
       setCurrentYear(stringYear)
-      console.log(stringMonth);
       let eventListResponse = []
 
 
@@ -82,7 +78,6 @@ const Calander = () => {
         console.log(err);
       }
 
-      console.log(eventListResponse.data);
       setEventList(eventListResponse.data);
 
     }
@@ -153,7 +148,6 @@ const Calander = () => {
       event:result,
     }
 
-    console.log(result);
     days.push(calanderCellObj);
   }
     
@@ -269,7 +263,6 @@ const Calander = () => {
       <Grid templateColumns="repeat(7, 1fr)" height="85%" >
         {days.map((value, keyIndex) => {  
           
-          // console.log(value)
             return(
           <CalanderCells key={keyIndex} keyIndex={keyIndex} value={value}/>
 
