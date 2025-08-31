@@ -130,13 +130,28 @@ const CalanderCells = ({value , keyIndex}) => {
 
 
 
+        // destructuring event date into days , months and years
+        console.log(eventDate.current.value)
+
+        const fullEventdate = eventDate.current.value
+        const year = fullEventdate.slice(0,4)
+        const day = String(Number(fullEventdate.slice(5,7)));
+        const month = fullEventdate.slice(8);
+        // console.log(day)
+
+
+        // return;
+
+
         // sending the form data to the backend
 
         const eventCreationFormData = {
 
             eventName:eventName.current.value,
             eventDescription:eventDescription.current.value,
-            eventDate:eventDate.current.value,
+            eventDay:day,
+            eventMonth:month,
+            eventYear:year,
             eventStartTime:eventStartTime.current.value,
             eventVenue:eventVenue.current.value,
             orgName:orgName.current.value,
@@ -177,6 +192,16 @@ const CalanderCells = ({value , keyIndex}) => {
     }
 
     
+
+
+
+
+
+
+
+
+
+
 
 
 

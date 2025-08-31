@@ -118,7 +118,9 @@ app.post("/eventcreation" , async(req,res) => {
     const {
         eventName,
         eventDescription,
-        eventDate,
+        eventDay,
+        eventMonth,
+        eventYear,
         eventStartTime,
         eventVenue,
         orgName,
@@ -129,7 +131,9 @@ app.post("/eventcreation" , async(req,res) => {
     const newEvent = new event({
         eventName:eventName,
         eventDescription:eventDescription,
-        eventDate:eventDate,
+        eventDay:eventDay,
+        eventMonth:eventMonth,
+        eventYear:eventYear,
         eventStartTime:eventStartTime,
         eventVenue:eventVenue,
         orgName:orgName,
@@ -147,6 +151,14 @@ app.post("/eventcreation" , async(req,res) => {
 
 
 
+
+
+// getting all the events
+app.get("/getallevents" , async(req,res) => {
+
+
+
+})
 
 
 
