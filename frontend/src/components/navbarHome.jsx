@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import {NavLink, useLocation} from "react-router-dom"
 import { Flex } from "@chakra-ui/react";
-import api from "../Utils/axios";
-import { unApprovedEventListAtom } from "../Utils/atoms";
-import { useRecoilState } from "recoil";
+
 
 
 
@@ -23,24 +21,6 @@ const NavbarHomePage = () => {
         }
 
     },[])
-
-
-
-    // setting up the atom so that list is acessable all across
-    const [unApprovedEventList , setUnApprovedEventList] = useRecoilState(unApprovedEventListAtom)
-
-
-
-
-    // getting the list of unapproved events after inbox button is clicked
-    const unApprovedEventListFunction = async() => {
-
-
-        // now the list is acessable from anywhere in the app
-        const list = await api.get("/inbox")
-        setUnApprovedEventList(list.data);
-        // console.log(list.data);
-    }
 
 
 
@@ -81,7 +61,7 @@ const NavbarHomePage = () => {
                     <Flex fontSize="xl" justify="start" align="center" padding="2px"  marginBottom="" width="100%" height="3rem" 
                     _hover={{ bg: '#ebedf0' }}
                     
-                    ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/inbox" onClick={unApprovedEventListFunction}>Inbox</NavLink></Flex>
+                    ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/inbox">Inbox</NavLink></Flex>
             
 
 
