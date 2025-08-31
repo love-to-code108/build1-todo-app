@@ -86,7 +86,7 @@ export const SignIn = () => {
 
             // navigating to the home page
             setUser(signInResponse.data.userOBJ);
-            navigate("/home", {replace:true});
+            navigate("/calander", {replace:true});
                     
 
 
