@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 // db related
 import connectDB from "./DB/connectDB.js";
 import User from "./DB/userSchema.js";
+import event from "./DB/eventSchema.js";
 
 
 dotenv.config()
@@ -112,6 +113,33 @@ app.post("/signin", async(req,res) => {
 app.post("/eventcreation" , async(req,res) => {
 
     console.log(req.body);
+
+    // destructuring the received data
+    const {
+        eventName,
+        eventDescription,
+        eventDate,
+        eventStartTime,
+        eventVenue,
+        orgName,
+        orgContact,
+        } = req.body;
+
+
+    const newEvent = new event({
+        eventName:eventName,
+        eventDescription:eventDescription,
+        eventDate:eventDate,
+        eventStartTime:eventStartTime,
+        eventVenue:eventVenue,
+        orgName:orgName,
+        orgContact:orgContact,
+        approved:false
+    })
+
+
+    // saving the event to the database
+    await newEvent.save();
     res.send(200);
 })
 
