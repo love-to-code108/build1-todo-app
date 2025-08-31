@@ -11,6 +11,10 @@ import {
 } from "date-fns";
 import {ChevronLeft, ChevronRight} from "lucide-react"
 import CalanderCells from "./calanderCell";
+import { useEffect } from "react";
+import api from "../Utils/axios";
+import { eventsList } from "../Utils/atoms";
+import { useRecoilState } from "recoil";
 
 
 
@@ -26,7 +30,7 @@ const Calander = () => {
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
-  console.log(month);
+  // console.log(month);
 
   const firstDayOfMonth = startOfMonth(currentDate);
   const lastDayofMonth = endOfMonth(currentDate);
@@ -34,6 +38,52 @@ const Calander = () => {
   const startWeekday = getDay(firstDayOfMonth);
   const endWeekDay = getDay(lastDayofMonth); 
   // console.log(endWeekDay)
+
+
+  const[eventList,setEventList] = useRecoilState(eventsList)
+
+
+
+  // asking the backend to send the array of events for this month and year
+  useEffect(() => {
+
+    const currentMonthEventListApiCall = async() => {
+
+     
+      const stringMonth = month.toString()
+      const stringYear = year.toString()
+      console.log(stringYear);
+      let eventListResponse = []
+
+      try{
+        
+          eventListResponse =   await api.post("/getallevents" , {
+
+          stringMonth,
+          stringYear,
+
+        })
+
+      }catch(err){
+        console.log(err);
+      }
+
+      setEventList(eventListResponse);
+
+    }
+
+
+    currentMonthEventListApiCall();
+
+
+  },[month])
+
+
+
+
+
+
+
 
   // build calendar grid
   const days = [];

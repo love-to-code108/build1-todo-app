@@ -154,8 +154,16 @@ app.post("/eventcreation" , async(req,res) => {
 
 
 // getting all the events
-app.get("/getallevents" , async(req,res) => {
+app.post("/getallevents" , async(req,res) => {
 
+    console.log(req.body);
+    // return;
+
+
+    const { month , year } = req.body;
+    console.log("month",month);
+
+    res.send(200);
 
 
 })
