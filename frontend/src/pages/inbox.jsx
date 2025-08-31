@@ -12,7 +12,6 @@ const Inbox = () => {
   const [unApprovedEventList, setUnApprovedEventList] = useRecoilState(
     unApprovedEventListAtom
   );
-  console.log(unApprovedEventList);
 
 
 

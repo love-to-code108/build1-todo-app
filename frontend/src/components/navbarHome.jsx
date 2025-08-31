@@ -20,7 +20,7 @@ const NavbarHomePage = () => {
             setDisplay(true);
         }
 
-    },[])
+    },[location.pathname])
 
 
 
