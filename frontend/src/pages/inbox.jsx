@@ -1,6 +1,6 @@
 import { unApprovedEventListAtom } from "../Utils/atoms";
 import { useRecoilState } from "recoil";
-import { Flex , Text } from "@chakra-ui/react";
+import { Button, Flex , Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import api from "../Utils/axios";
 
@@ -35,12 +35,12 @@ const Inbox = () => {
 
 
     return(
-        <div> 
+        <div className=" w-[100%] p-[2rem]"> 
             
             <Flex flexDirection="column">
             
             {/* the inbox heading */}
-            <Text fontSize="3xl">Inbox</Text>
+            <Text fontSize="3xl" fontWeight="bold" marginBottom="2rem">Inbox</Text>
 
 
             {/* all the mails pending for approval */}
@@ -49,19 +49,20 @@ const Inbox = () => {
 
                 return(
                     <Flex
-                    backgroundColor="red.300"
+                    width="100%"
+                    backgroundColor="#F0F0F0"
                     marginBottom="2rem"
-                    
+                    padding="2rem"
                     flexDirection="column" key={index}>
                         {/* event name */}
                         <Text>{value.eventName}</Text>
 
                         {/*date */}
-                        <Text>{value.eventName}</Text>
+                        <Text>{value.eventDay + "/" + value.eventMonth + "/" + value.eventYear}</Text>
 
                         {/* venue */}
                         <Text>
-                            <span>Venue :</span>
+                            <span>Venue : </span>
                              {value.eventVenue}
                         </Text>
 
@@ -76,6 +77,17 @@ const Inbox = () => {
                         </Text>
 
 
+                        
+                        {/* approve and decline buttons */}
+                        <Flex width="100%" justify="end" marginBottom="0rem" backgroundColor="">
+
+                            {/* Decline Button */}
+                            <Button variant="outline" colorScheme="black">Decline</Button>
+
+                            {/* Approve Button */}
+                            <Button marginLeft="2rem" backgroundColor="black" colorScheme="black">Approve</Button>
+
+                        </Flex>
 
                     </Flex>
                 );
