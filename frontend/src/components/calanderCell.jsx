@@ -1,4 +1,4 @@
-import { Box , Text, useDisclosure , Button, Input, Textarea, InputGroup, InputLeftAddon, Select, useToast  } from "@chakra-ui/react";
+import { Box , Flex , Text, useDisclosure , Button, Input, Textarea, InputGroup, InputLeftAddon, Select, useToast  } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -19,14 +19,17 @@ import {
 import { useRef } from "react";
 
 import api from "../Utils/axios";
+import CalanderEvent from "./calanderEventsInCalanderCells";
 
 
 
 
 const CalanderCells = ({value , keyIndex}) => {
 
+  console.log(value)
 
-    // trying to understand the modal
+
+    // modal functions
     const { isOpen , onOpen , onClose } = useDisclosure()
 
 
@@ -209,10 +212,13 @@ const CalanderCells = ({value , keyIndex}) => {
 
   return (
     <>
-    <Box
+    <Flex
       
+      position="relative"
       onClick={onOpen}
-      h=""
+      flexDirection="column"
+      // maxHeight="8.4rem"
+      // minHeight="8.3rem"
       padding="4px"
       border="1px solid #e2e8f0"
       display="flex"
@@ -221,12 +227,25 @@ const CalanderCells = ({value , keyIndex}) => {
       bg={value.dayNumber ? "gray.50" : "transparent"}
       _hover={value.dayNumber && { bg: "#ebedf0" }}
     >
+
+      {/* showing the day number */}
       {value.dayNumber && (
         <Text fontSize="sm" fontWeight="medium">
           {value.dayNumber}
         </Text>
       )}
-    </Box>
+
+
+      {/* showing events if any */}
+      {value.event && 
+      <div className=" overflow-hidden
+      flex flex-col
+      w-[100%] h-[6rem] absolute cursor-pointer bottom-0 right-0">
+      <CalanderEvent value={value}/>
+      </div>
+      }
+
+    </Flex>
 
 
 
