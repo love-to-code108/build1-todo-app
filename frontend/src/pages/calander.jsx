@@ -10,7 +10,7 @@ import {
   endOfMonth,
 } from "date-fns";
 import {ChevronLeft, ChevronRight} from "lucide-react"
-import CalanderCells from "./calanderCell";
+import CalanderCells from "../components/calanderCell";
 import { useEffect } from "react";
 import api from "../Utils/axios";
 import { currentMonthAtom, currentYearAtom, eventListAtom } from "../Utils/atoms";

@@ -20,3 +20,8 @@ export const currentYearAtom = atom({
     key:"currentYearAtom",
     default:""
 })
+
+export const unApprovedEventListAtom = atom({
+    key:"unApprovedEventListAtom",
+    default:""
+})

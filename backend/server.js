@@ -189,8 +189,9 @@ app.post("/getallevents" , async(req,res) => {
 // getting all the events for the inbox
 app.get("/inbox", async(req,res) => {
 
-    const eventList = await event.find({ approved : false});
-    res.send(eventList);
+    const unApprovedEventList = await event.find({ approved : false});
+    // console.log(unApprovedEventList);
+    res.send(unApprovedEventList);
 })
 
 
