@@ -4,12 +4,12 @@ import { Flex } from "@chakra-ui/react";
 
 
 
+
 const NavbarHomePage = () => {
 
 
 
     const location = useLocation()
-    console.log(location);
     const [display,setDisplay] = useState();
 
     useEffect(() =>{
@@ -25,19 +25,19 @@ const NavbarHomePage = () => {
 
 
 
-
     return(
-        <div className={`${display ? "flex" : "hidden"} bg-white w-[20%]`} 
+        <div className={`${display ? "flex" : "hidden"} bg-white w-[20%] px-[1rem]`} 
         >
 
 
 
             {/* navigation */}
-                  <Flex width="100%" height="84.5%" backgroundColor="" flexDirection="column" justify="start" align="center" marginTop="8rem"  >
+                  <Flex width="100%" height="83.6%" backgroundColor="#f7fafc"
+                   flexDirection="column" justify="start" align="center" marginTop="8rem"   >
             
             
                     {/* calander */}
-                    <Flex fontSize="xl" justify="start" border="solid 1px #e2e8f0" align="center" padding="2px" paddingLeft="8px" marginBottom="" width="100%" height="3rem" backgroundColor="gray.50"
+                    <Flex fontSize="xl" justify="center"  align="center"  width="100%" height="3rem" 
                     
                     _hover={{ bg: '#ebedf0' }}
                     _active={{
@@ -52,38 +52,38 @@ const NavbarHomePage = () => {
                     cursor="pointer"
                     userSelect="none"
                     
-                    ><NavLink className=" w-[100%] h-[100%]" to="/calander">Calander</NavLink></Flex>
+                    ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/calander">Calander</NavLink></Flex>
             
 
 
 
                     {/* inbox */}
-                    <Flex fontSize="xl" justify="start" align="center" padding="2px" border="solid 1px #e2e8f0" paddingLeft="8px" marginBottom="" width="100%" height="3rem" backgroundColor="gray.50"
+                    <Flex fontSize="xl" justify="start" align="center" padding="2px"  marginBottom="" width="100%" height="3rem" 
                     _hover={{ bg: '#ebedf0' }}
                     
-                    ><NavLink className=" w-[100%] h-[100%]" to="/inbox">Inbox</NavLink></Flex>
+                    ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/inbox">Inbox</NavLink></Flex>
             
 
 
 
 
                     {/* guest */}
-                    <Flex fontSize="xl" justify="start" align="center" padding="2px" border="solid 1px #e2e8f0" marginBottom="" paddingLeft="8px"
-                     width="100%" height="3rem" backgroundColor="gray.50"
+                    <Flex fontSize="xl" justify="start" align="center" padding="2px"  marginBottom="" 
+                     width="100%" height="3rem" 
                      _hover={{ bg: '#ebedf0' }}
                      
-                     ><NavLink className=" w-[100%] h-[100%]" to="/guest">Guest</NavLink></Flex>
+                     ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/guest">Guest</NavLink></Flex>
             
 
 
 
 
                     {/* vehicle status */}
-                    <Flex fontSize="xl" justify="start" align="center" padding="2px" border="solid 1px #e2e8f0" marginBottom="" paddingLeft="8px"
-                    width="100%" height="3rem" backgroundColor="gray.50"
+                    <Flex fontSize="xl" justify="start" align="center" padding="2px"  marginBottom="" 
+                    width="100%" height="3rem" 
                     _hover={{ bg: '#ebedf0' }}
                     
-                    ><NavLink className=" w-[100%] h-[100%]" to="/vehiclestatus">Vehicle Status</NavLink></Flex>
+                    ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/vehiclestatus">Vehicle Status</NavLink></Flex>
             
                   </Flex>
 
