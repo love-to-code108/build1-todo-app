@@ -13,7 +13,7 @@ import {ChevronLeft, ChevronRight} from "lucide-react"
 import CalanderCells from "./calanderCell";
 import { useEffect } from "react";
 import api from "../Utils/axios";
-import { eventsList } from "../Utils/atoms";
+import { currentMonthAtom, currentYearAtom, eventListAtom } from "../Utils/atoms";
 import { useRecoilState } from "recoil";
 
 
@@ -41,7 +41,14 @@ const Calander = () => {
 
 
   // init the atom containing the array of all events
-  const[eventList,setEventList] = useRecoilState(eventsList)
+  const[eventList,setEventList] = useRecoilState(eventListAtom)
+  const[currentMonth,setCurrentMonth] = useRecoilState(currentMonthAtom)
+  const[currentYear,setCurrentYear] = useRecoilState(currentYearAtom)
+
+
+
+
+
 
 
 
@@ -54,6 +61,8 @@ const Calander = () => {
       // converting the month and year to string 
       const stringMonth = (month + 1).toString()
       const stringYear = year.toString()
+      setCurrentMonth(stringMonth)
+      setCurrentYear(stringYear)
       console.log(stringMonth);
       let eventListResponse = []
 
@@ -85,6 +94,10 @@ const Calander = () => {
 
 
   },[month])
+
+
+
+
 
 
 
@@ -136,7 +149,7 @@ const Calander = () => {
       const calanderCellObj = {
       dayNumber:d,
       monthNumber:month + 1,
-      year:year + 1,
+      year:year,
       event:result,
     }
 
@@ -150,7 +163,7 @@ const Calander = () => {
       const calanderCellObj = {
       dayNumber:d,
       monthNumber:month + 1,
-      year:year + 1,
+      year:year,
     }
 
     days.push(calanderCellObj);

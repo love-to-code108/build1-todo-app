@@ -20,13 +20,20 @@ import { useRef } from "react";
 
 import api from "../Utils/axios";
 import CalanderEvent from "./calanderEventsInCalanderCells";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentMonthAtom, currentYearAtom, eventListAtom } from "../Utils/atoms";
 
 
 
 
 const CalanderCells = ({value , keyIndex}) => {
 
-  console.log(value)
+  
+    // declaring the atoms for current month and year
+    const stringMonth = useRecoilValue(currentMonthAtom); 
+    const stringYear = useRecoilValue(currentYearAtom);
+
+    const[eventList , setEventList] = useRecoilState(eventListAtom)
 
 
     // modal functions
@@ -134,16 +141,14 @@ const CalanderCells = ({value , keyIndex}) => {
 
 
         // destructuring event date into days , months and years
-        console.log(eventDate.current.value)
+       
 
         const fullEventdate = eventDate.current.value
         const year = fullEventdate.slice(0,4)
         const month = String(Number(fullEventdate.slice(5,7)));
         const day = String(Number(fullEventdate.slice(8)));
-        // console.log(day)
 
 
-        // return;
 
 
         // sending the form data to the backend
@@ -188,6 +193,24 @@ const CalanderCells = ({value , keyIndex}) => {
             })
 
 
+            onClose();
+            let eventListResponse = [];
+
+
+            try{
+
+            eventListResponse = await api.post("/getallevents" , {
+                stringMonth,
+                stringYear
+              })
+            }catch(err){
+              console.log(err);
+            }
+            
+            console.log(eventListResponse.data);
+            setEventList(eventListResponse.data);
+
+
 
             return;
 
@@ -211,12 +234,12 @@ const CalanderCells = ({value , keyIndex}) => {
 
 
   return (
-    <>
+    <div className=" relative">
     <Flex
       
-      position="relative"
       onClick={onOpen}
       flexDirection="column"
+      height="100%"
       // maxHeight="8.4rem"
       // minHeight="8.3rem"
       padding="4px"
@@ -236,7 +259,19 @@ const CalanderCells = ({value , keyIndex}) => {
       )}
 
 
-      {/* showing events if any */}
+      
+
+    </Flex>
+
+
+
+
+
+
+
+
+
+    {/* showing events if any */}
       {value.event && 
       <div className=" overflow-hidden
       flex flex-col
@@ -245,7 +280,14 @@ const CalanderCells = ({value , keyIndex}) => {
       </div>
       }
 
-    </Flex>
+
+
+
+
+
+
+
+
 
 
 
@@ -319,7 +361,7 @@ const CalanderCells = ({value , keyIndex}) => {
         </ModalContent>
       </Modal>
     }
-    </>
+    </div>
   );
 };
 

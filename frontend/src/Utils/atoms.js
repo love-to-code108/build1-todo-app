@@ -6,7 +6,17 @@ export const User = atom({
     default:null
 })
 
-export const eventsList = atom({
-    key:"eventsList",
+export const eventListAtom = atom({
+    key:"eventListAtom",
     default:[]
+})
+
+export const currentMonthAtom = atom({
+    key:"currentMonthAtom",
+    default:""
+})
+
+export const currentYearAtom = atom({
+    key:"currentYearAtom",
+    default:""
 })
