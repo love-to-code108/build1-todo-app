@@ -11,3 +11,10 @@ Frontend Dependencies :
 2. react-router-dom
 3. tailwind css
 4. axios
+
+
+
+
+backend env
+DB_URL = "mongodb+srv://lovetocode108:5tMGC2ci6a8ckscv@cluster0.q64wjkp.mongodb.net/"
+FRONTEND_URL = "http://localhost:5173"
