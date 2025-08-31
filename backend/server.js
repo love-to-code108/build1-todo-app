@@ -202,6 +202,23 @@ app.get("/inbox", async(req,res) => {
 
 
 
+// event approval
+app.post("/eventapprove" , async(req,res) => {
+
+    const{_id , approved } = req.body;
+    const eventApproval = await event.findById(_id);
+
+    eventApproval.approved = true;
+    await eventApproval.save();
+
+    res.send("")
+})
+
+
+
+
+
+
 
 
 
