@@ -40,6 +40,7 @@ const Calander = () => {
   // console.log(endWeekDay)
 
 
+  // init the atom containing the array of all events
   const[eventList,setEventList] = useRecoilState(eventsList)
 
 
@@ -50,11 +51,15 @@ const Calander = () => {
     const currentMonthEventListApiCall = async() => {
 
      
-      const stringMonth = month.toString()
+      // converting the month and year to string 
+      const stringMonth = (month + 1).toString()
       const stringYear = year.toString()
-      console.log(stringYear);
+      console.log(stringMonth);
       let eventListResponse = []
 
+
+
+      // sending data to get all the array of events
       try{
         
           eventListResponse =   await api.post("/getallevents" , {
@@ -74,6 +79,8 @@ const Calander = () => {
     }
 
 
+
+    // calling the above function in the use effect
     currentMonthEventListApiCall();
 
 
@@ -89,15 +96,8 @@ const Calander = () => {
   // build calendar grid
   const days = [];
 
-  // calander cell object
-  const calanderCellObj = {
-    dayNumber:null,
-    monthNumber:null,
-    year:null
-  }
+  
 
-
-    //  console.log(days);
 
 
 
@@ -116,19 +116,56 @@ const Calander = () => {
 
 
 
+
+
+
+
+
+
+
     // days of this month
   for (let d = 1; d <= daysInMonth; d++) {
     
-    const calanderCellObj = {
-    dayNumber:d,
-    monthNumber:month + 1,
-    year:year + 1,
+
+
+    // checking if this day matches with the event day
+    const result = eventList.find(event => event.eventDay == d)    
+
+    // if we get something from searcing
+    if(result){
+      const calanderCellObj = {
+      dayNumber:d,
+      monthNumber:month + 1,
+      year:year + 1,
+      event:result,
+    }
+
+    console.log(result);
+    days.push(calanderCellObj);
+  }
+    
+    // if we dont get anything from searching
+    else{
+      
+      const calanderCellObj = {
+      dayNumber:d,
+      monthNumber:month + 1,
+      year:year + 1,
+    }
+
+    days.push(calanderCellObj);
   }
     
 
-    days.push(calanderCellObj);
 
   }
+
+
+
+
+
+
+
 
 
 
