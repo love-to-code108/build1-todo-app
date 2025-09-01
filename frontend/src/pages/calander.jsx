@@ -52,6 +52,8 @@ const Calander = () => {
   // asking the backend to send the array of events for this month and year
   useEffect(() => {
 
+
+    try{
     const currentMonthEventListApiCall = async () => {
 
 
@@ -86,6 +88,10 @@ const Calander = () => {
 
     // calling the above function in the use effect
     currentMonthEventListApiCall();
+  }
+  catch(err){
+    console.log(err);
+  }
 
 
   }, [month])
@@ -134,14 +140,19 @@ const Calander = () => {
   // days of this month
   for (let d = 1; d <= daysInMonth; d++) {
 
+    let result = []
 
-
+    try{
     // checking if this day matches with the event day
-    const result = eventList.filter(event => event.eventDay == d)
+    result = eventList.filter(event => event.eventDay == d)
     console.log(result[0])
 
+    }catch(err){
+      console.log(err)
+    }
+
     // if we get something from searcing
-    if (result[0]) {
+    if (result != undefined) {
 
       console.log("working");
       const calanderCellObj = {
