@@ -37,6 +37,19 @@ const CalanderEvent = ({ value }) => {
     const guestOtherDetails = useRef("")
     const POCName = useRef("")
     const POCContactNumber = useRef("");
+    // const transportationRequired = useRef("");
+    const pickupLocation = useRef("");
+    const pickUpGoogleMapsUrl = useRef("");
+    const pickUpDateAndTime = useRef("");
+    const dropOffLocation = useRef("");
+    const dropOffGoogleMapsUrl = useRef("");
+    const dropOffDateAndTime = useRef("");
+    const transportationOtherDetails = useRef("");
+    // const lodgingRequired = useRef("");
+    const hotelName = useRef("");
+    const hotelCheckInDateAndTime = useRef("");
+    const hotelOtherDetails = useRef("");
+
 
 
 
@@ -59,6 +72,7 @@ const CalanderEvent = ({ value }) => {
     const closeGuestView = () => {
         setAddGuest((prev) => !prev);
         setTransportation(false)
+        setLodging(false);
         onClose();
     }
 
@@ -185,9 +199,14 @@ const CalanderEvent = ({ value }) => {
     }
 
 
-    //checking if the guest require transportation & lodging or not 
+    //checking if the guest require transportation or not 
     const [transportation, setTransportation] = useState(false);
     console.log(transportation);
+
+
+    // checking if the guest require lodging or not
+    const [lodging, setLodging] = useState(false);
+    console.log(lodging)
 
 
 
@@ -253,23 +272,22 @@ const CalanderEvent = ({ value }) => {
             :
 
 
-            <Modal size="fit-content"
+            <Modal
                 isCentered
                 motionPreset='slideInBottom'
                 isOpen={isOpen}
-                
+
             >
                 <ModalOverlay />
-                <ModalContent 
-                transition="width"
-                w="fit-content" maxW="90vw">
+                <ModalContent
+                    w="fit-content" maxW="90vw">
                     <ModalHeader fontSize="3xl">Add Guest Info</ModalHeader>
                     <ModalBody className=" flex justify-between">
 
 
 
                         {/* the guest info form */}
-                        <FormControl isRequired >
+                        <FormControl isRequired>
 
 
                             {/* Guest Name */}
@@ -309,7 +327,7 @@ const CalanderEvent = ({ value }) => {
                             {/* if the guest require transportation */}
                             <Checkbox
                                 onChange={(e) => setTransportation(e.target.checked)}
-                            >Does the guest require transportation and lodging
+                            >Does the guest require transportation
                             </Checkbox>
 
 
@@ -319,75 +337,115 @@ const CalanderEvent = ({ value }) => {
 
 
 
-                        
+
 
 
 
 
                         {transportation &&
-                        
-                        
-                        // guest transportation form
-                        <FormControl isRequired marginLeft="1rem">
 
 
-                            {/* Guest Name */}
-                            <FormLabel>Guest Name</FormLabel>
-                            <Input ref={guestName} type="text" />
+                            // guest transportation form
+                            <FormControl isRequired marginLeft="1rem">
 
 
-                            {/* Guest Email */}
-                            <FormLabel>Guest Email</FormLabel>
-                            <Input ref={guestEmail} type="email" />
-
-                            {/* Guest Contact Info */}
-                            <FormLabel>Guest Contact Number</FormLabel>
-                            <InputGroup margin>
-                                <InputLeftAddon>+91</InputLeftAddon>
-                                <Input ref={guestContactNumber} placeholder="Phone Number" type="number" />
-                            </InputGroup>
-
-                            {/* Guest Other Details box */}
-                            <FormLabel>Other Details</FormLabel>
-                            <Textarea ref={guestOtherDetails} resize="vertical" />
+                                {/* Guest Pick Up Location */}
+                                <FormLabel>Pic Up Location</FormLabel>
+                                <Input ref={pickupLocation} type="text" />
 
 
-                            {/* Person of contact with the guest ( name ) */}
-                            <FormLabel>(POC) Name</FormLabel>
-                            <Input ref={POCName} type="text" />
+                                {/* Google Maps URL for pickup */}
+                                <FormLabel>Google Maps URL</FormLabel>
+                                <Input ref={pickUpGoogleMapsUrl} type="email" />
+
+                                {/* Pick Up date and time */}
+                                <FormLabel>Pick Up Date and Time</FormLabel>
+                                <Input ref={pickUpDateAndTime} type="datetime-local" />
 
 
-                            {/* person of contact with the guest (contact number ) */}
-                            <FormLabel>(POC) Contact Number</FormLabel>
-                            <InputGroup margin>
-                                <InputLeftAddon>+91</InputLeftAddon>
-                                <Input ref={POCContactNumber} placeholder="Phone Number" type="number" />
-                            </InputGroup>
+                                {/* drop off details */}
+
+                                {/* drop off location */}
+                                <FormLabel>Drop Off Location</FormLabel>
+                                <Input ref={dropOffLocation} type="text" />
 
 
-                            {/* if the guest require transportation */}
-                            <Checkbox
-                                onChange={(e) => console.log(e.target.checked)}
-                            >Does the guest require transportation and lodging
-                            </Checkbox>
+                                {/* drop off location url google maps */}
+                                <FormLabel>Google Maps URL</FormLabel>
+                                <Input ref={dropOffGoogleMapsUrl} type="email" />
+
+                                {/* drop off date and time */}
+                                <FormLabel>Drop Off Date and Time</FormLabel>
+                                <Input ref={dropOffDateAndTime} type="datetime-local" />
+
+
+                                {/* transportation other details */}
+                                <FormLabel>Other Details</FormLabel>
+                                <Textarea ref={transportationOtherDetails} resize="vertical" />
 
 
 
-                        </FormControl>
-                        
-                        
+
+
+                                {/* if the guest require transportation */}
+                                <Checkbox
+                                    onChange={(e) => setLodging(e.target.checked)}
+                                >Does the guest require Lodging
+                                </Checkbox>
+
+
+
+                            </FormControl>
+
+
                         }
-                        
-                    
 
-                </ModalBody>
-                <ModalFooter>
-                    <Button colorScheme='black' variant="outline" mr={3} onClick={closeGuestView}>
-                        Close
-                    </Button>
-                    <Button onClick={addGuestData} variant='black'>Add Guest</Button>
-                </ModalFooter>
-            </ModalContent>
+
+
+
+
+
+
+
+
+                        {/* lodging  */}
+                        {lodging &&
+
+
+                            <FormControl isRequired marginLeft="1rem">
+
+
+                                {/* Hotel Name */}
+                                <FormLabel>Hotel Name</FormLabel>
+                                <Input ref={hotelName} type="text" />
+
+
+                                {/* Hotel check in date and time */}
+                                <FormLabel>Hotel Check in Date and Time</FormLabel>
+                                <Input ref={hotelCheckInDateAndTime} type="datetime-local" />
+
+
+                                {/* Hotel other details */}
+                                <FormLabel>Other Details</FormLabel>
+                                <Textarea ref={hotelOtherDetails} resize="vertical" />
+
+
+
+                            </FormControl>
+
+
+                        }
+
+
+
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme='black' variant="outline" mr={3} onClick={closeGuestView}>
+                            Close
+                        </Button>
+                        <Button onClick={addGuestData} variant='black'>Add Guest</Button>
+                    </ModalFooter>
+                </ModalContent>
             </Modal >
 
         }
