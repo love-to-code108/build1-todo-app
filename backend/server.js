@@ -217,6 +217,13 @@ app.post("/eventapprove", async (req, res) => {
 
 
 
+// add guest data
+app.post("/addguestdata" , async(req,res) => {
+    res.send(200)
+    
+})
+
+
 
 
 

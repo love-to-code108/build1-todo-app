@@ -1,4 +1,4 @@
-import { Button, Text, Flex, useDisclosure } from "@chakra-ui/react";
+import { Button, Text, Flex, useDisclosure, Input, Textarea, InputGroup, InputLeftAddon, useToast } from "@chakra-ui/react";
 import {
     Modal,
     ModalOverlay,
@@ -13,11 +13,13 @@ import { useRecoilValue } from "recoil";
 import { monthNameArrayAtom } from "../Utils/atoms";
 
 import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
+    FormControl,
+    FormLabel,
+    FormErrorMessage,
+    FormHelperText,
 } from '@chakra-ui/react'
+import api from "../Utils/axios";
+import { useRef } from "react";
 
 
 const CalanderEvent = ({ value }) => {
@@ -28,8 +30,18 @@ const CalanderEvent = ({ value }) => {
 
 
 
-    // event overview 
+    // useRef to accept data from the frontend
+    const guestName = useRef("")
+    const guestEmail = useRef("")
+    const guestContactNumber = useRef("")
+    const guestOtherDetails = useRef("")
+    const POCName = useRef("")
+    const POCContactNumber = useRef("");
 
+
+
+    // adding toast
+    const toast = useToast()
 
 
     // opening the event overview modal
@@ -54,6 +66,98 @@ const CalanderEvent = ({ value }) => {
     const monthNameArray = useRecoilValue(monthNameArrayAtom);
     const MonthName = monthNameArray[value.event.eventMonth - 1]
     console.log(MonthName);
+
+
+
+
+
+
+
+    // add guest Data
+    const addGuestData = async () => {
+
+
+
+        // handling things incase of an error
+        // handling things in case of an error
+        if(guestName.current.value == ""){
+
+            toast({
+                title: "Missing Guest Name",
+                description: "Please enter the name of the Guest before submitting.",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }else if(guestEmail.current.value == ""){
+
+            toast({
+                title: "Add Guest Email",
+                description: "Please add a valid email for the guest",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+
+        }else if(guestContactNumber.current.value == ""){
+
+            toast({
+                title: "Guest contact number missing",
+                description: "Please add a valid phone number for the guest",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }else if(guestOtherDetails.current.value == ""){
+
+            toast({
+                title: "Missing other details",
+                description: "A short description helps others understand the details of the guest like are they veg or non veg etc.",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }else if(POCName.current.value == ""){
+
+            toast({
+                title: "Please enter a POC Name",
+                description: "It makes it easy to coordinate during events",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }else if(POCContactNumber.current.value == ""){
+
+            toast({
+                title: "Please enter a POC Contact number",
+                description: "It makes it easy to coordinate during events",
+                status:"error",
+                isClosable: true,
+                position:"top-right"
+            })
+
+            return;
+        }
+
+
+
+
+
+        const addGuestDataRes = api.post("/addguestdata" , {
+
+        })
+
+    }
 
 
 
@@ -127,16 +231,52 @@ const CalanderEvent = ({ value }) => {
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Add Guest Info</ModalHeader>
+                    <ModalHeader fontSize="3xl">Add Guest Info</ModalHeader>
                     <ModalBody>
+                        <FormControl isRequired>
 
-                        
+
+                            {/* Guest Name */}
+                            <FormLabel>Guest Name</FormLabel>
+                            <Input ref={guestName} type="text" />
+
+
+                            {/* Guest Email */}
+                            <FormLabel>Guest Email</FormLabel>
+                            <Input ref={guestEmail} type="email" />
+
+                            {/* Guest Contact Info */}
+                            <FormLabel>Guest Contact Number</FormLabel>
+                            <InputGroup margin>
+                                <InputLeftAddon>+91</InputLeftAddon>
+                                <Input ref={guestContactNumber} placeholder="Phone Number" type="number" />
+                            </InputGroup>
+
+                            {/* Guest Other Details box */}
+                            <FormLabel>Other Details</FormLabel>
+                            <Textarea ref={guestOtherDetails} resize="vertical" />
+
+
+                            {/* Person of contact with the guest ( name ) */}
+                            <FormLabel>(POC) Name</FormLabel>
+                            <Input ref={POCName} type="text" />
+
+
+                            {/* person of contact with the guest (contact number ) */}
+                            <FormLabel>(POC) Contact Number</FormLabel>
+                            <InputGroup margin>
+                                <InputLeftAddon>+91</InputLeftAddon>
+                                <Input ref={POCContactNumber} placeholder="Phone Number" type="number" />
+                            </InputGroup>
+
+
+                        </FormControl>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={closeGuestView}>
+                        <Button colorScheme='black' variant="outline" mr={3} onClick={closeGuestView}>
                             Close
                         </Button>
-                        <Button variant='ghost'>Secondary Action</Button>
+                        <Button onClick={addGuestData} variant='black'>Add Guest</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

@@ -41,13 +41,13 @@ const CalanderCells = ({value , keyIndex}) => {
 
 
     // all the useRefs for the form
-    const eventName = useRef(null);
-    const eventDescription = useRef(null);
-    const eventDate = useRef(null);
-    const eventStartTime = useRef(null);
-    const eventVenue = useRef(null);
-    const orgName = useRef(null);
-    const orgContact = useRef(null);
+    const eventName = useRef("");
+    const eventDescription = useRef("");
+    const eventDate = useRef("");
+    const eventStartTime = useRef("");
+    const eventVenue = useRef("");
+    const orgName = useRef("");
+    const orgContact = useRef("");
 
     // init toast 
     const toast = useToast()
@@ -57,6 +57,8 @@ const CalanderCells = ({value , keyIndex}) => {
     const submitEventCreationForm = async() => {
 
 
+
+      // handling things in case of an error
         if(eventName.current.value == ""){
 
             toast({
@@ -322,7 +324,7 @@ const CalanderCells = ({value , keyIndex}) => {
 
                 {/*Start Time of Event */}
                 <FormLabel>Start Time</FormLabel>
-                <Input ref={eventStartTime} marginBottom="1rem" placeholder="9:00AM" type="time"/>
+                <Input ref={eventStartTime} marginBottom="1rem" type="time"/>
 
 
 
