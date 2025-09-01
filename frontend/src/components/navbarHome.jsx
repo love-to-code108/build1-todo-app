@@ -47,7 +47,8 @@ const NavbarHomePage = () => {
                     cursor="pointer"
                     userSelect="none"
                     textColor="#707072"
-                ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/calander">Calander</NavLink></Flex>
+                ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/calander"
+                >Calander</NavLink></Flex>
 
 
 
