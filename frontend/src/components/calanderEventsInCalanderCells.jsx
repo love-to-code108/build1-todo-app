@@ -1,4 +1,4 @@
-import { Button, Text, Flex, useDisclosure, Input, Textarea, InputGroup, InputLeftAddon, useToast } from "@chakra-ui/react";
+import { Button, Text, Flex, useDisclosure, Input, Textarea, InputGroup, InputLeftAddon, useToast, Checkbox } from "@chakra-ui/react";
 import {
     Modal,
     ModalOverlay,
@@ -58,6 +58,7 @@ const CalanderEvent = ({ value }) => {
 
     const closeGuestView = () => {
         setAddGuest((prev) => !prev);
+        setTransportation(false)
         onClose();
     }
 
@@ -65,7 +66,6 @@ const CalanderEvent = ({ value }) => {
     // event month number to month name converter
     const monthNameArray = useRecoilValue(monthNameArrayAtom);
     const MonthName = monthNameArray[value.event.eventMonth - 1]
-    console.log(MonthName);
 
 
 
@@ -80,85 +80,114 @@ const CalanderEvent = ({ value }) => {
 
         // handling things incase of an error
         // handling things in case of an error
-        if(guestName.current.value == ""){
+        if (guestName.current.value == "") {
 
             toast({
                 title: "Missing Guest Name",
                 description: "Please enter the name of the Guest before submitting.",
-                status:"error",
+                status: "error",
                 isClosable: true,
-                position:"top-right"
+                position: "top-right"
             })
 
             return;
-        }else if(guestEmail.current.value == ""){
+        } else if (guestEmail.current.value == "") {
 
             toast({
                 title: "Add Guest Email",
                 description: "Please add a valid email for the guest",
-                status:"error",
+                status: "error",
                 isClosable: true,
-                position:"top-right"
+                position: "top-right"
             })
 
             return;
 
-        }else if(guestContactNumber.current.value == ""){
+        } else if (guestContactNumber.current.value == "") {
 
             toast({
                 title: "Guest contact number missing",
                 description: "Please add a valid phone number for the guest",
-                status:"error",
+                status: "error",
                 isClosable: true,
-                position:"top-right"
+                position: "top-right"
             })
 
             return;
-        }else if(guestOtherDetails.current.value == ""){
+        } else if (guestOtherDetails.current.value == "") {
 
             toast({
                 title: "Missing other details",
                 description: "A short description helps others understand the details of the guest like are they veg or non veg etc.",
-                status:"error",
+                status: "error",
                 isClosable: true,
-                position:"top-right"
+                position: "top-right"
             })
 
             return;
-        }else if(POCName.current.value == ""){
+        } else if (POCName.current.value == "") {
 
             toast({
                 title: "Please enter a POC Name",
                 description: "It makes it easy to coordinate during events",
-                status:"error",
+                status: "error",
                 isClosable: true,
-                position:"top-right"
+                position: "top-right"
             })
 
             return;
-        }else if(POCContactNumber.current.value == ""){
+        } else if (POCContactNumber.current.value == "") {
 
             toast({
                 title: "Please enter a POC Contact number",
                 description: "It makes it easy to coordinate during events",
-                status:"error",
+                status: "error",
                 isClosable: true,
-                position:"top-right"
+                position: "top-right"
             })
 
             return;
         }
 
 
+        const addGuestData = {
+
+            event_id: value.event._id,
+            guestName: guestName.current.value,
+            guestEmail: guestEmail.current.value,
+            guestContactNumber: guestContactNumber.value,
+            guestOtherDetails: guestOtherDetails.value,
+            POCName: POCName.current.value,
+            POCContactNumber: POCContactNumber.current.value
+        }
 
 
+        try {
+            const addGuestDataRes = await api.post("/addguestdata", addGuestData)
 
-        const addGuestDataRes = api.post("/addguestdata" , {
+            addGuestDataRes && toast({
+                title: "Sucessfully Added Guest",
+                description: "you have sucessfully added a guest to this event",
+                status: "success",
+                isClosable: true,
+                position: "top-right"
+            })
 
-        })
+            console.log(addGuestDataRes.data)
+
+
+        } catch (err) {
+            console.log(err);
+        }
+
+
 
     }
 
+
+    //checking if the guest require transportation & lodging or not 
+    const [transportation, setTransportation] = useState(false);
+    console.log(transportation);
 
 
 
@@ -224,16 +253,23 @@ const CalanderEvent = ({ value }) => {
             :
 
 
-            <Modal size="xl"
+            <Modal size="fit-content"
                 isCentered
                 motionPreset='slideInBottom'
                 isOpen={isOpen}
+                
             >
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent 
+                transition="width"
+                w="fit-content" maxW="90vw">
                     <ModalHeader fontSize="3xl">Add Guest Info</ModalHeader>
-                    <ModalBody>
-                        <FormControl isRequired>
+                    <ModalBody className=" flex justify-between">
+
+
+
+                        {/* the guest info form */}
+                        <FormControl isRequired >
 
 
                             {/* Guest Name */}
@@ -270,16 +306,89 @@ const CalanderEvent = ({ value }) => {
                             </InputGroup>
 
 
+                            {/* if the guest require transportation */}
+                            <Checkbox
+                                onChange={(e) => setTransportation(e.target.checked)}
+                            >Does the guest require transportation and lodging
+                            </Checkbox>
+
+
+
                         </FormControl>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button colorScheme='black' variant="outline" mr={3} onClick={closeGuestView}>
-                            Close
-                        </Button>
-                        <Button onClick={addGuestData} variant='black'>Add Guest</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+
+
+
+
+                        
+
+
+
+
+                        {transportation &&
+                        
+                        
+                        // guest transportation form
+                        <FormControl isRequired marginLeft="1rem">
+
+
+                            {/* Guest Name */}
+                            <FormLabel>Guest Name</FormLabel>
+                            <Input ref={guestName} type="text" />
+
+
+                            {/* Guest Email */}
+                            <FormLabel>Guest Email</FormLabel>
+                            <Input ref={guestEmail} type="email" />
+
+                            {/* Guest Contact Info */}
+                            <FormLabel>Guest Contact Number</FormLabel>
+                            <InputGroup margin>
+                                <InputLeftAddon>+91</InputLeftAddon>
+                                <Input ref={guestContactNumber} placeholder="Phone Number" type="number" />
+                            </InputGroup>
+
+                            {/* Guest Other Details box */}
+                            <FormLabel>Other Details</FormLabel>
+                            <Textarea ref={guestOtherDetails} resize="vertical" />
+
+
+                            {/* Person of contact with the guest ( name ) */}
+                            <FormLabel>(POC) Name</FormLabel>
+                            <Input ref={POCName} type="text" />
+
+
+                            {/* person of contact with the guest (contact number ) */}
+                            <FormLabel>(POC) Contact Number</FormLabel>
+                            <InputGroup margin>
+                                <InputLeftAddon>+91</InputLeftAddon>
+                                <Input ref={POCContactNumber} placeholder="Phone Number" type="number" />
+                            </InputGroup>
+
+
+                            {/* if the guest require transportation */}
+                            <Checkbox
+                                onChange={(e) => console.log(e.target.checked)}
+                            >Does the guest require transportation and lodging
+                            </Checkbox>
+
+
+
+                        </FormControl>
+                        
+                        
+                        }
+                        
+                    
+
+                </ModalBody>
+                <ModalFooter>
+                    <Button colorScheme='black' variant="outline" mr={3} onClick={closeGuestView}>
+                        Close
+                    </Button>
+                    <Button onClick={addGuestData} variant='black'>Add Guest</Button>
+                </ModalFooter>
+            </ModalContent>
+            </Modal >
 
         }
     </>

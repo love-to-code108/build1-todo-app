@@ -33,16 +33,7 @@ const theme = extendTheme({
         },
       },
     },
-    Checkbox: {
-      baseStyle: {
-        control: {
-          _focus: {
-            boxShadow: "0 0 0 2px black",
-            borderColor: "black",
-          },
-        },
-      },
-    },
+    
     Radio: {
       baseStyle: {
         control: {

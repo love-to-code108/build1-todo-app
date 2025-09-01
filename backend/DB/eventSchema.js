@@ -11,7 +11,8 @@ const eventSchema = new mongoose.Schema({
     eventVenue:{ type:String, required: true },
     orgName:{ type:String, required: true },
     orgContact:{ type:String, required: true },
-    approved:{ type:Boolean, required:true}
+    approved:{ type:Boolean, required:true},
+    guest:{type:Array}
 })
 
 

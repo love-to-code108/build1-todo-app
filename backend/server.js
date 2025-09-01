@@ -219,7 +219,23 @@ app.post("/eventapprove", async (req, res) => {
 
 // add guest data
 app.post("/addguestdata" , async(req,res) => {
-    res.send(200)
+
+    const _id = req.body.event_id;
+
+
+    // searching the db for the event details
+    let eventData = await event.findById(_id);
+    console.log(eventData);
+
+
+    // updating the db with the provided data
+    eventData.guest.push(req.body);
+    
+    // saving the guest data
+    await eventData.save()
+
+
+    res.send("Backend Received the data")
     
 })
 
