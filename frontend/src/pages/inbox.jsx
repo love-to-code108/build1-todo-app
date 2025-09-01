@@ -17,7 +17,7 @@ const Inbox = () => {
 
   // getting the month names
   const monthNameArray = useRecoilValue(monthNameArrayAtom)
-  
+
 
 
 
@@ -42,10 +42,20 @@ const Inbox = () => {
 
 
   return (
-    <div className=" w-[100%] p-[2rem]">
-      <Flex flexDirection="column">
+    <div className=" w-[100%] flex ">
+
+      <Flex 
+      width="20%"
+      ></Flex>
+
+      <Flex 
+      width="80%"
+      flexDirection="column"
+      align="center"
+      
+      padding="2rem">
         {/* the inbox heading */}
-        <Text fontSize="3xl" fontWeight="bold" marginBottom="2rem">
+        <Text fontSize="3xl" fontWeight="bold" marginBottom="3rem" textAlign="left" width="90%">
           Inbox
         </Text>
 
@@ -60,7 +70,7 @@ const Inbox = () => {
 
 
 
-           
+
 
             // updating the approved state
             const approveFunction = async () => {
@@ -101,15 +111,17 @@ const Inbox = () => {
 
 
 
-
+            // returning the array of unapproved events
             return (
+              
               <Flex
-                width="100%"
+                width="90%"
                 backgroundColor="#F0F0F0"
                 marginBottom="2rem"
                 padding="2rem"
                 flexDirection="column"
                 key={index}
+                borderRadius={6}
               >
 
 

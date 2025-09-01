@@ -9,7 +9,7 @@ import {
   subMonths,
   endOfMonth,
 } from "date-fns";
-import {ChevronLeft, ChevronRight} from "lucide-react"
+import { ChevronLeft, ChevronRight, Divide } from "lucide-react"
 import CalanderCells from "../components/calanderCell";
 import { useEffect } from "react";
 import api from "../Utils/axios";
@@ -34,13 +34,13 @@ const Calander = () => {
   const lastDayofMonth = endOfMonth(currentDate);
   const daysInMonth = getDaysInMonth(currentDate);
   const startWeekday = getDay(firstDayOfMonth);
-  const endWeekDay = getDay(lastDayofMonth); 
+  const endWeekDay = getDay(lastDayofMonth);
 
 
   // init the atom containing the array of all events
-  const[eventList,setEventList] = useRecoilState(eventListAtom)
-  const[currentMonth,setCurrentMonth] = useRecoilState(currentMonthAtom)
-  const[currentYear,setCurrentYear] = useRecoilState(currentYearAtom)
+  const [eventList, setEventList] = useRecoilState(eventListAtom)
+  const [currentMonth, setCurrentMonth] = useRecoilState(currentMonthAtom)
+  const [currentYear, setCurrentYear] = useRecoilState(currentYearAtom)
 
 
 
@@ -52,9 +52,9 @@ const Calander = () => {
   // asking the backend to send the array of events for this month and year
   useEffect(() => {
 
-    const currentMonthEventListApiCall = async() => {
+    const currentMonthEventListApiCall = async () => {
 
-     
+
       // converting the month and year to string 
       const stringMonth = (month + 1).toString()
       const stringYear = year.toString()
@@ -65,16 +65,16 @@ const Calander = () => {
 
 
       // sending data to get all the array of events
-      try{
-        
-          eventListResponse =   await api.post("/getallevents" , {
+      try {
+
+        eventListResponse = await api.post("/getallevents", {
 
           stringMonth,
           stringYear,
 
         })
 
-      }catch(err){
+      } catch (err) {
         console.log(err);
       }
 
@@ -88,7 +88,7 @@ const Calander = () => {
     currentMonthEventListApiCall();
 
 
-  },[month])
+  }, [month])
 
 
 
@@ -104,20 +104,20 @@ const Calander = () => {
   // build calendar grid
   const days = [];
 
-  
 
 
 
 
-    // leading blanks
+
+  // leading blanks
   for (let i = 0; i < startWeekday; i++) {
 
     const calanderCellObj = {
-    dayNumber:null,
-    monthNumber:null,
-    year:null
-  }
-    
+      dayNumber: null,
+      monthNumber: null,
+      year: null
+    }
+
 
     days.push(calanderCellObj);
   }
@@ -131,38 +131,38 @@ const Calander = () => {
 
 
 
-    // days of this month
+  // days of this month
   for (let d = 1; d <= daysInMonth; d++) {
-    
+
 
 
     // checking if this day matches with the event day
-    const result = eventList.find(event => event.eventDay == d)    
+    const result = eventList.find(event => event.eventDay == d)
 
     // if we get something from searcing
-    if(result){
+    if (result) {
       const calanderCellObj = {
-      dayNumber:d,
-      monthNumber:month + 1,
-      year:year,
-      event:result,
+        dayNumber: d,
+        monthNumber: month + 1,
+        year: year,
+        event: result,
+      }
+
+      days.push(calanderCellObj);
     }
 
-    days.push(calanderCellObj);
-  }
-    
     // if we dont get anything from searching
-    else{
-      
+    else {
+
       const calanderCellObj = {
-      dayNumber:d,
-      monthNumber:month + 1,
-      year:year,
+        dayNumber: d,
+        monthNumber: month + 1,
+        year: year,
+      }
+
+      days.push(calanderCellObj);
     }
 
-    days.push(calanderCellObj);
-  }
-    
 
 
   }
@@ -173,18 +173,18 @@ const Calander = () => {
 
 
 
-    //  ending blanks
-    for(let i = endWeekDay; i<6 ; i++ ){
+  //  ending blanks
+  for (let i = endWeekDay; i < 6; i++) {
 
     const calanderCellObj = {
-    dayNumber:null,
-    monthNumber:null,
-    year:null
-  }
-    
-    
-    days.push(calanderCellObj);
+      dayNumber: null,
+      monthNumber: null,
+      year: null
     }
+
+
+    days.push(calanderCellObj);
+  }
 
 
 
@@ -199,74 +199,86 @@ const Calander = () => {
 
 
   return (
-    <Flex width="100%" height="100%" backgroundColor="" paddingLeft="">
+
+    <div className=" flex w-[100%]">
+
+      {/* the ghost navbar */}
+      <Flex 
+      width="20%"
+      ></Flex>
 
 
-      {/* the calander */}
-    <Box paddingTop="1rem" width="100%" height="100%">
-      {/* Header with navigation */}
-      <Flex align="center" mb="2.5rem">
+      {/* the main calander thingy */}
+      <Flex width="80%" height="100vh" backgroundColor="" paddingX="2rem">
 
-        <Flex>
-        {/* previous month */}
-        <IconButton 
-        marginRight="1rem"
-        icon={<ChevronLeft/>}
-        borderRadius="100%"
-        variant="outline"
-        onClick={() => setCurrentDate(subMonths(currentDate, 1))}>
-          {"<"}
-        </IconButton>
 
-        {/* next month */}
-        <IconButton 
-        icon={<ChevronRight/>}
-        marginRight="1rem"
-        variant="outline"
-        borderRadius="100%"
-        onClick={() => setCurrentDate(addMonths(currentDate, 1))}>
-          {">"}
-        </IconButton>
-        </Flex>
+        {/* the calander */}
+        <Box paddingTop="1rem" width="100%" height="100%">
+          {/* Header with navigation */}
+          <Flex align="center" mb="2.5rem">
 
-        {/* the month and year */}
-        <Text fontSize="xl" fontWeight="bold">
-          {format(currentDate, "MMMM yyyy")}
-        </Text>
+            <Flex>
+              {/* previous month */}
+              <IconButton
+                marginRight="1rem"
+                icon={<ChevronLeft />}
+                borderRadius="100%"
+                variant="outline"
+                onClick={() => setCurrentDate(subMonths(currentDate, 1))}>
+                {"<"}
+              </IconButton>
+
+              {/* next month */}
+              <IconButton
+                icon={<ChevronRight />}
+                marginRight="1rem"
+                variant="outline"
+                borderRadius="100%"
+                onClick={() => setCurrentDate(addMonths(currentDate, 1))}>
+                {">"}
+              </IconButton>
+            </Flex>
+
+            {/* the month and year */}
+            <Text fontSize="xl" fontWeight="bold">
+              {format(currentDate, "MMMM yyyy")}
+            </Text>
+          </Flex>
+
+          {/* Weekday labels */}
+          <Grid templateColumns="repeat(7, 1fr)" gap={2} mb={2}>
+            {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+              <Text key={day} fontWeight="bold" textAlign="center">
+                {day}
+              </Text>
+            ))}
+          </Grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          {/* Calendar days */}
+          <Grid templateColumns="repeat(7, 1fr)" height="85%" >
+            {days.map((value, keyIndex) => {
+
+              return (
+                <CalanderCells key={keyIndex} keyIndex={keyIndex} value={value} />
+
+              )
+            })}
+          </Grid>
+        </Box>
       </Flex>
-
-      {/* Weekday labels */}
-      <Grid templateColumns="repeat(7, 1fr)" gap={2} mb={2}>
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-          <Text key={day} fontWeight="bold" textAlign="center">
-            {day}
-          </Text>
-        ))}
-      </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-      {/* Calendar days */}
-      <Grid templateColumns="repeat(7, 1fr)" height="85%" >
-        {days.map((value, keyIndex) => {  
-          
-            return(
-          <CalanderCells key={keyIndex} keyIndex={keyIndex} value={value}/>
-
-          )})}
-      </Grid>
-    </Box>
-    </Flex>
+    </div>
   );
 }
 
