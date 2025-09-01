@@ -1,34 +1,155 @@
-import { Button , Text ,Flex, useDisclosure } from "@chakra-ui/react";
+import { Button, Text, Flex, useDisclosure } from "@chakra-ui/react";
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+} from '@chakra-ui/react'
+import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { monthNameArrayAtom } from "../Utils/atoms";
+
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+} from '@chakra-ui/react'
+
+
+const CalanderEvent = ({ value }) => {
+
+
+    // state to controll modal state between event overview and adding guests
+    const [addGuest, setAddGuest] = useState(false);
 
 
 
-const CalanderEvent = ({value}) => {
-
-    const { isOpen , onOpen , onClose } = useDisclosure()
+    // event overview 
 
 
-    const handleOnClick = () => {
 
-        onClose();
-        console.log("The Button is working")
+    // opening the event overview modal
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const openOverView = () => {
+        onOpen();
     }
 
 
-    return(
+    // opening the add guest modal
+    const openAddGuestView = () => {
+        setAddGuest((prev) => !prev)
+    }
+
+    const closeGuestView = () => {
+        setAddGuest((prev) => !prev);
+        onClose();
+    }
+
+
+    // event month number to month name converter
+    const monthNameArray = useRecoilValue(monthNameArrayAtom);
+    const MonthName = monthNameArray[value.event.eventMonth - 1]
+    console.log(MonthName);
+
+
+
+
+
+    return (<>
         <Flex
-        size="sm"
-        width="100%"
-        justify="start"
-        padding="2px"
-        paddingLeft="4px"
-        backgroundColor="black"
-        textColor="white"
-        fontSize="sm"
-        fontWeight="bold"
-        onClick={handleOnClick}
+            size="sm"
+            width="100%"
+            justify="start"
+            padding="2px"
+            paddingLeft="4px"
+            backgroundColor="black"
+            textColor="white"
+            fontSize="sm"
+            fontWeight="bold"
+            onClick={openOverView}
         >{value.event.eventName}</Flex>
+
+        {!addGuest ?
+
+            <Modal
+                size="xl"
+                isCentered
+                motionPreset='slideInBottom'
+                isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    {/* Event name */}
+                    <ModalHeader fontSize="4xl">{value.event.eventName}</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody fontSize="md">
+
+
+                        {/* Date */}
+                        <Text><span className="font-bold">Date : </span>{`${value.event.eventDay} ${MonthName} ${value.event.eventYear}`}</Text>
+
+
+                        {/* Venue */}
+                        <Text marginBottom="1rem"><span className="font-bold">Venue : </span>{value.event.eventVenue}</Text>
+
+
+                        {/* Description */}
+                        <Text marginBottom="1rem"><span className="font-bold">Description : </span>{value.event.eventDescription}</Text>
+
+
+                        {/* Organized By */}
+                        <Text ><span className="font-bold">Organized By : </span>{value.event.orgName}</Text>
+
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme='black' variant="outline" mr={3} onClick={onClose}>
+                            Close
+                        </Button>
+                        <Button variant="black"
+                            onClick={openAddGuestView}
+                        >Add Guest</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+
+
+            :
+
+
+            <Modal size="xl"
+                isCentered
+                motionPreset='slideInBottom'
+                isOpen={isOpen}
+            >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Add Guest Info</ModalHeader>
+                    <ModalBody>
+
+                        
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme='blue' mr={3} onClick={closeGuestView}>
+                            Close
+                        </Button>
+                        <Button variant='ghost'>Secondary Action</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+        }
+    </>
     );
 }
 
 
 export default CalanderEvent;
+
+
+
+
+

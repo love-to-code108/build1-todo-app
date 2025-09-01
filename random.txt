@@ -13,3 +13,5 @@ Frontend Dependencies :
 4. axios
 
 
+mongodb+srv://lovetocode108:5tMGC2ci6a8ckscv@cluster0.q64wjkp.mongodb.net/
+http://localhost:5173
