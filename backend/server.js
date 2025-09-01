@@ -14,7 +14,7 @@ const app = express();
 
 // allowing the specific urls
 app.use(cors({
-    origin: process.env.FRONTEND_URL
+    // origin: process.env.FRONTEND_URL
 }))
 
 
@@ -215,6 +215,29 @@ app.post("/eventapprove", async (req, res) => {
 })
 
 
+
+
+// add guest data
+app.post("/addguestdata" , async(req,res) => {
+
+    const _id = req.body.event_id;
+
+
+    // searching the db for the event details
+    let eventData = await event.findById(_id);
+    console.log(eventData);
+
+
+    // updating the db with the provided data
+    eventData.guest.push(req.body);
+    
+    // saving the guest data
+    await eventData.save()
+
+
+    res.send("Backend Received the data")
+    
+})
 
 
 

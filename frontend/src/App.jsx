@@ -23,7 +23,7 @@ function App() {
 
 
   return (
-    <div className=" flex w-[100vw] h-[100vh]">
+    <div className=" flex w-[100%] relative">
 
       
       <NavbarHomePage />
