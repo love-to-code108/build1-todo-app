@@ -14,7 +14,7 @@ const app = express();
 
 // allowing the specific urls
 app.use(cors({
-    origin:process.env.FRONTEND_URL
+    origin: process.env.FRONTEND_URL
 }))
 
 
@@ -31,33 +31,33 @@ connectDB();
 
 
 // the signup route
-app.post('/signup',async(req,res) => {
+app.post('/signup', async (req, res) => {
 
-    const {email , password} = req.body;    
+    const { email, password } = req.body;
 
     const newUser = new User({
-        email:email,
-        password:password
+        email: email,
+        password: password
     });
 
-    
+
     // checking if the email already exists
-    try{
-    const userExists = await User.findOne({email:email})
+    try {
+        const userExists = await User.findOne({ email: email })
 
-    // if user doesnot exists
-    if(userExists === null ){
-        await newUser.save()
-        res.send("New user created");
-    }
-    
-    else if(userExists !== null){
+        // if user doesnot exists
+        if (userExists === null) {
+            await newUser.save()
+            res.send("New user created");
+        }
 
-        // if user already exists
-        res.send("Email Already Exists")
-    }
+        else if (userExists !== null) {
 
-    }catch(err){
+            // if user already exists
+            res.send("Email Already Exists")
+        }
+
+    } catch (err) {
         console.log(err);
     }
 
@@ -71,30 +71,30 @@ app.post('/signup',async(req,res) => {
 
 
 // the sign in route
-app.post("/signin", async(req,res) => {
+app.post("/signin", async (req, res) => {
 
     // receiving the data and converting it to variables
-    const {email , password} = req.body;
+    const { email, password } = req.body;
 
 
-    try{
-    // searching for the user in the db
-    const user = await User.findOne({email});
+    try {
+        // searching for the user in the db
+        const user = await User.findOne({ email });
 
-    // if user is not found
-    if(!user){
-        return res.send({message:"User not found"});
-    }
+        // if user is not found
+        if (!user) {
+            return res.send({ message: "User not found" });
+        }
 
-    // if user is found matching password
-    if(user.password !== password){
-        return res.json({message:"Invalid Credentials"})
-    }
+        // if user is found matching password
+        if (user.password !== password) {
+            return res.json({ message: "Invalid Credentials" })
+        }
 
-    // if user email and password match with db
-    res.json({message:"Login Sucessful", userOBJ:user})
+        // if user email and password match with db
+        res.json({ message: "Login Sucessful", userOBJ: user })
 
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
 })
@@ -110,7 +110,7 @@ app.post("/signin", async(req,res) => {
 
 
 // the event creation form
-app.post("/eventcreation" , async(req,res) => {
+app.post("/eventcreation", async (req, res) => {
 
     console.log(req.body);
 
@@ -125,20 +125,20 @@ app.post("/eventcreation" , async(req,res) => {
         eventVenue,
         orgName,
         orgContact,
-        } = req.body;
+    } = req.body;
 
 
     const newEvent = new event({
-        eventName:eventName,
-        eventDescription:eventDescription,
-        eventDay:eventDay,
-        eventMonth:eventMonth,
-        eventYear:eventYear,
-        eventStartTime:eventStartTime,
-        eventVenue:eventVenue,
-        orgName:orgName,
-        orgContact:orgContact,
-        approved:false
+        eventName: eventName,
+        eventDescription: eventDescription,
+        eventDay: eventDay,
+        eventMonth: eventMonth,
+        eventYear: eventYear,
+        eventStartTime: eventStartTime,
+        eventVenue: eventVenue,
+        orgName: orgName,
+        orgContact: orgContact,
+        approved: false
     })
 
 
@@ -154,20 +154,20 @@ app.post("/eventcreation" , async(req,res) => {
 
 
 // getting all the events filtered by month and year
-app.post("/getallevents" , async(req,res) => {
+app.post("/getallevents", async (req, res) => {
 
     // console.log(req.body);
     // return;
 
 
-    const { stringMonth , stringYear } = req.body;
+    const { stringMonth, stringYear } = req.body;
     // console.log("month",stringYear);
     const month = stringMonth;
     const year = stringYear;
-    console.log(month,year)
-    const eventArray = await event.find({ 
-        eventMonth:month ,
-        eventYear:year
+    console.log(month, year)
+    const eventArray = await event.find({
+        eventMonth: month,
+        eventYear: year
     });
 
     console.log(eventArray);
@@ -187,9 +187,9 @@ app.post("/getallevents" , async(req,res) => {
 
 
 // getting all the events for the inbox
-app.get("/inbox", async(req,res) => {
+app.get("/inbox", async (req, res) => {
 
-    const unApprovedEventList = await event.find({ approved : false});
+    const unApprovedEventList = await event.find({ approved: false });
     // console.log(unApprovedEventList);
     res.send(unApprovedEventList);
 })
@@ -203,9 +203,9 @@ app.get("/inbox", async(req,res) => {
 
 
 // event approval
-app.post("/eventapprove" , async(req,res) => {
+app.post("/eventapprove", async (req, res) => {
 
-    const{_id , approved } = req.body;
+    const { _id, approved } = req.body;
     const eventApproval = await event.findById(_id);
 
     eventApproval.approved = true;
@@ -224,6 +224,6 @@ app.post("/eventapprove" , async(req,res) => {
 
 
 
-app.listen( 5000, () => {
+app.listen(5000, () => {
     console.log("Server Running")
 })
