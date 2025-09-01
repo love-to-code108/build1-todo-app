@@ -1,5 +1,5 @@
-import { unApprovedEventListAtom } from "../Utils/atoms";
-import { useRecoilState } from "recoil";
+import { monthNameArrayAtom, unApprovedEventListAtom } from "../Utils/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Button, Flex, Text, useToast } from "@chakra-ui/react";
 import { useEffect } from "react";
 import api from "../Utils/axios";
@@ -12,6 +12,12 @@ const Inbox = () => {
   const [unApprovedEventList, setUnApprovedEventList] = useRecoilState(
     unApprovedEventListAtom
   );
+
+
+
+  // getting the month names
+  const monthNameArray = useRecoilValue(monthNameArrayAtom)
+  
 
 
 
@@ -54,7 +60,7 @@ const Inbox = () => {
 
 
 
-
+           
 
             // updating the approved state
             const approveFunction = async () => {
@@ -75,18 +81,23 @@ const Inbox = () => {
                   position: "top-right",
                   duration: 4000,
                 });
-                
+
               } catch (err) {
                 console.log(err);
               }
 
 
-            //   reupdating the list
-                const list = await api.get("/inbox");
-                setUnApprovedEventList(list.data);
+              //   reupdating the list
+              const list = await api.get("/inbox");
+              setUnApprovedEventList(list.data);
 
-              
-            };
+
+            }
+
+            console.log(value.eventMonth)
+            const MonthName = monthNameArray[value.eventMonth]
+
+
 
 
 
@@ -100,29 +111,28 @@ const Inbox = () => {
                 flexDirection="column"
                 key={index}
               >
+
+
+
                 {/* event name */}
-                <Text>{value.eventName}</Text>
+                <Text fontSize="3xl" fontWeight="bold" marginBottom="1.5rem">{value.eventName}</Text>
 
-                {/*date */}
-                <Text>
-                  {value.eventDay +
-                    "/" +
-                    value.eventMonth +
-                    "/" +
-                    value.eventYear}
-                </Text>
+                {/* Date */}
+                <Text><span className="font-bold">Date : </span>{`${value.eventDay} ${MonthName} ${value.eventYear}`}</Text>
 
-                {/* venue */}
-                <Text>
-                  <span>Venue : </span>
-                  {value.eventVenue}
-                </Text>
 
-                {/* description */}
-                <Text>{value.eventDescription}</Text>
+                {/* Venue */}
+                <Text marginBottom="1rem"><span className="font-bold">Venue : </span>{value.eventVenue}</Text>
 
-                {/* organizer */}
-                <Text>{value.orgName}</Text>
+
+                {/* Description */}
+                <Text marginBottom="1rem"><span className="font-bold">Description : </span>{value.eventDescription}</Text>
+
+
+                {/* Organized By */}
+                <Text ><span className="font-bold">Organized By : </span>{value.orgName}</Text>
+
+
 
                 {/* approve and decline buttons */}
                 <Flex
