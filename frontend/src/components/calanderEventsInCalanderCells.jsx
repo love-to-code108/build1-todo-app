@@ -12,6 +12,13 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { monthNameArrayAtom } from "../Utils/atoms";
 
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+} from '@chakra-ui/react'
+
 
 const CalanderEvent = ({ value }) => {
 
@@ -22,15 +29,24 @@ const CalanderEvent = ({ value }) => {
 
 
     // event overview 
-    console.log(value.event)
 
 
-    // working with the modals
+
+    // opening the event overview modal
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const handleOnClick = () => {
-
+    const openOverView = () => {
         onOpen();
-        console.log("The Button is working")
+    }
+
+
+    // opening the add guest modal
+    const openAddGuestView = () => {
+        setAddGuest((prev) => !prev)
+    }
+
+    const closeGuestView = () => {
+        setAddGuest((prev) => !prev);
+        onClose();
     }
 
 
@@ -54,7 +70,7 @@ const CalanderEvent = ({ value }) => {
             textColor="white"
             fontSize="sm"
             fontWeight="bold"
-            onClick={handleOnClick}
+            onClick={openOverView}
         >{value.event.eventName}</Flex>
 
         {!addGuest ?
@@ -92,7 +108,9 @@ const CalanderEvent = ({ value }) => {
                         <Button colorScheme='black' variant="outline" mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button variant="black">Add Guest</Button>
+                        <Button variant="black"
+                            onClick={openAddGuestView}
+                        >Add Guest</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
@@ -102,17 +120,20 @@ const CalanderEvent = ({ value }) => {
             :
 
 
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal size="xl"
+                isCentered
+                motionPreset='slideInBottom'
+                isOpen={isOpen}
+            >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Modal Title</ModalHeader>
-                    <ModalCloseButton />
+                    <ModalHeader>Add Guest Info</ModalHeader>
                     <ModalBody>
 
+                        
                     </ModalBody>
-
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onClose}>
+                        <Button colorScheme='blue' mr={3} onClick={closeGuestView}>
                             Close
                         </Button>
                         <Button variant='ghost'>Secondary Action</Button>
