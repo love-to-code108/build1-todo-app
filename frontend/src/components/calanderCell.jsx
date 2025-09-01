@@ -275,7 +275,7 @@ const CalanderCells = ({ value, keyIndex }) => {
 
 
       {/* showing events if any */}
-      <div  className=" overflow-hidden
+      <div  className=" overflow-y
               flex flex-col
               w-[100%] h-[] absolute cursor-pointer top-[2rem] right-0">
         {value.eventExists &&

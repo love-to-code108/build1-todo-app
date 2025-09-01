@@ -259,8 +259,9 @@ const CalanderEvent = ({ value }) => {
             justify="start"
             padding="2px"
             paddingLeft="4px"
-            backgroundColor={ value.approved ? "green" : "blue"}
+            backgroundColor={ value.approved ? "#23AF00" : "#2D88FE"}
             textColor="white"
+            borderRadius={4}
             fontSize="sm"
             fontWeight="bold"
             onClick={openOverView}
