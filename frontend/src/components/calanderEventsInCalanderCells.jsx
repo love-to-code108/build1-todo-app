@@ -176,6 +176,8 @@ const CalanderEvent = ({ value }) => {
         }
 
 
+
+        // adding guest data to the db
         try {
             const addGuestDataRes = await api.post("/addguestdata", addGuestData)
 
@@ -201,12 +203,43 @@ const CalanderEvent = ({ value }) => {
 
     //checking if the guest require transportation or not 
     const [transportation, setTransportation] = useState(false);
-    console.log(transportation);
 
 
     // checking if the guest require lodging or not
     const [lodging, setLodging] = useState(false);
-    console.log(lodging)
+
+
+
+
+
+    // checking if the event is approved or not 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -218,7 +251,7 @@ const CalanderEvent = ({ value }) => {
             justify="start"
             padding="2px"
             paddingLeft="4px"
-            backgroundColor="black"
+            backgroundColor={ value.event.approved ? "green" : "blue"}
             textColor="white"
             fontSize="sm"
             fontWeight="bold"
@@ -281,7 +314,7 @@ const CalanderEvent = ({ value }) => {
                 <ModalOverlay />
                 <ModalContent
                     w="fit-content" maxW="90vw">
-                    <ModalHeader fontSize="3xl">Add Guest Info</ModalHeader>
+                    <ModalHeader fontSize="3xl">Guest Info</ModalHeader>
                     <ModalBody className=" flex justify-between">
 
 

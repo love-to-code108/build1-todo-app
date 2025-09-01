@@ -173,9 +173,6 @@ const Calander = () => {
 
 
 
-
-
-
     //  ending blanks
     for(let i = endWeekDay; i<6 ; i++ ){
 
