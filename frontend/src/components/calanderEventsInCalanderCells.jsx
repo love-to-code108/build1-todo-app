@@ -25,6 +25,10 @@ import { useRef } from "react";
 const CalanderEvent = ({ value }) => {
 
 
+    // console.log(value)
+
+
+
     // state to controll modal state between event overview and adding guests
     const [addGuest, setAddGuest] = useState(false);
 
@@ -79,7 +83,7 @@ const CalanderEvent = ({ value }) => {
 
     // event month number to month name converter
     const monthNameArray = useRecoilValue(monthNameArrayAtom);
-    const MonthName = monthNameArray[value.event.eventMonth - 1]
+    const MonthName = monthNameArray[value.eventMonth - 1]
 
 
 
@@ -93,7 +97,6 @@ const CalanderEvent = ({ value }) => {
 
 
         // handling things incase of an error
-        // handling things in case of an error
         if (guestName.current.value == "") {
 
             toast({
@@ -166,7 +169,7 @@ const CalanderEvent = ({ value }) => {
 
         const addGuestData = {
 
-            event_id: value.event._id,
+            event_id: value._id,
             guestName: guestName.current.value,
             guestEmail: guestEmail.current.value,
             guestContactNumber: guestContactNumber.value,
@@ -245,18 +248,23 @@ const CalanderEvent = ({ value }) => {
 
 
     return (<>
+
+
+
+
         <Flex
             size="sm"
+            marginBottom="4px"
             width="100%"
             justify="start"
             padding="2px"
             paddingLeft="4px"
-            backgroundColor={ value.event.approved ? "green" : "blue"}
+            backgroundColor={ value.approved ? "green" : "blue"}
             textColor="white"
             fontSize="sm"
             fontWeight="bold"
             onClick={openOverView}
-        >{value.event.eventName}</Flex>
+        >{value.eventName}</Flex>
 
         {!addGuest ?
 
@@ -268,25 +276,25 @@ const CalanderEvent = ({ value }) => {
                 <ModalOverlay />
                 <ModalContent>
                     {/* Event name */}
-                    <ModalHeader fontSize="4xl">{value.event.eventName}</ModalHeader>
+                    <ModalHeader fontSize="4xl">{value.eventName}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody fontSize="md">
 
 
                         {/* Date */}
-                        <Text><span className="font-bold">Date : </span>{`${value.event.eventDay} ${MonthName} ${value.event.eventYear}`}</Text>
+                        <Text><span className="font-bold">Date : </span>{`${value.eventDay} ${MonthName} ${value.eventYear}`}</Text>
 
 
                         {/* Venue */}
-                        <Text marginBottom="1rem"><span className="font-bold">Venue : </span>{value.event.eventVenue}</Text>
+                        <Text marginBottom="1rem"><span className="font-bold">Venue : </span>{value.eventVenue}</Text>
 
 
                         {/* Description */}
-                        <Text marginBottom="1rem"><span className="font-bold">Description : </span>{value.event.eventDescription}</Text>
+                        <Text marginBottom="1rem"><span className="font-bold">Description : </span>{value.eventDescription}</Text>
 
 
                         {/* Organized By */}
-                        <Text ><span className="font-bold">Organized By : </span>{value.event.orgName}</Text>
+                        <Text ><span className="font-bold">Organized By : </span>{value.orgName}</Text>
 
                     </ModalBody>
                     <ModalFooter>

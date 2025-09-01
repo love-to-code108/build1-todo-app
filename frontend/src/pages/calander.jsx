@@ -137,15 +137,19 @@ const Calander = () => {
 
 
     // checking if this day matches with the event day
-    const result = eventList.find(event => event.eventDay == d)
+    const result = eventList.filter(event => event.eventDay == d)
+    console.log(result[0])
 
     // if we get something from searcing
-    if (result) {
+    if (result[0]) {
+
+      console.log("working");
       const calanderCellObj = {
         dayNumber: d,
         monthNumber: month + 1,
         year: year,
         event: result,
+        eventExists: true,
       }
 
       days.push(calanderCellObj);
