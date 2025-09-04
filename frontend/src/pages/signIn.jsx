@@ -20,82 +20,110 @@ import { User } from "../Utils/atoms";
 
 export const SignIn = () => {
 
-    const setUser = useSetRecoilState(User);
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+  const setUser = useSetRecoilState(User);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-    const toast = useToast();
+  const toast = useToast();
 
-    const navigate = useNavigate();
-
-
+  const navigate = useNavigate();
 
 
 
-    const signInFunction = async() => {
-
-        // sending data to the backend
-        try{
-
-            const signInResponse = await api.post("/signin" , {
-                email,
-                password
-            })
-            
-            console.log(signInResponse);
-
-            // responding as per the data we got back
-            if(signInResponse.data.message === "User not found"){
-                toast({
-                    title:"User not found",
-                    description:"There is no existing account with this email",
-                    status:"error",
-                    isClosable:"true",
-                    position:"top-right"
-                })
-
-                return;
-            }
 
 
+  const signInFunction = async () => {
 
-           if(signInResponse.data.message === "Invalid Credentials"){
-                toast({
-                    title:"Invalid Credentials",
-                    description:"Please recheck your email and password",
-                    status:"error",
-                    isClosable:"true",
-                    position:"top-right"
-                })
+    // sending data to the backend
+    try {
 
-                return;
-            }
+      const signInResponse = await api.post("/signin", {
+        email,
+        password
+      })
 
+      console.log(signInResponse);
 
-            // sigin sucessful
-            toast({
-                    title:"Login Successful",
-                    description:"You have successfully logged in ",
-                    status:"success",
-                    isClosable:"true",
-                    position:"top-right",
-                    duration:1000
-                })
+      // responding as per the data we got back
+      if (signInResponse.data.message === "User not found") {
+        toast({
+          title: "User not found",
+          description: "There is no existing account with this email",
+          status: "error",
+          isClosable: "true",
+          position: "top-right"
+        })
+
+        return;
+      }
 
 
 
-            // navigating to the home page
-            setUser(signInResponse.data.userOBJ);
-            navigate("/calander", {replace:true});
-                    
+      if (signInResponse.data.message === "Invalid Credentials") {
+        toast({
+          title: "Invalid Credentials",
+          description: "Please recheck your email and password",
+          status: "error",
+          isClosable: "true",
+          position: "top-right"
+        })
+
+        return;
+      }
 
 
-        }catch(err){
-            console.log(err);
-        }
+      // sigin sucessful
+      toast({
+        title: "Login Successful",
+        description: "You have successfully logged in ",
+        status: "success",
+        isClosable: "true",
+        position: "top-right",
+        duration: 1000
+      })
 
 
+
+      // navigating to the home page
+      console.log(signInResponse.data.user)
+      const setUser = signInResponse.data.user;
+
+      localStorage.setItem("jwtToken", signInResponse.data.jwtToken);
+
+      // redirecting to /calander if sign in sucessful
+      navigate("/calander", { replace: true });
+
+
+
+    } catch (err) {
+      console.log(err);
     }
+
+
+  }
+
+
+
+
+
+
+  // if there is an already existing jwt token sending it so that the user is instantly signed in without any hastle
+  const jwt = async () => {
+
+    try {
+
+      // getting the jwt token from the local storage
+      const jwtToken = localStorage.getItem("jwtToken");
+      
+    }
+
+    catch (err) {
+      console.log(err.response.data);
+    }
+
+  }
+
+  jwt()
 
 
 
@@ -116,16 +144,16 @@ export const SignIn = () => {
           {/* the Email input */}
           <FormLabel>Email Address</FormLabel>
           <Input id="SignUpEmail"
-          onChange={(e) => {setEmail(e.target.value)}}
-           marginBottom="1rem" type="email" placeholder="Email"/>
+            onChange={(e) => { setEmail(e.target.value) }}
+            marginBottom="1rem" type="email" placeholder="Email" />
 
 
 
           {/* the Password input */}
           <FormLabel>Password</FormLabel>
           <Input id="SignUpPassword"
-          onChange={(e) => {setPassword(e.target.value)}}
-           marginBottom="1rem" type="password" placeholder="Password"/>
+            onChange={(e) => { setPassword(e.target.value) }}
+            marginBottom="1rem" type="password" placeholder="Password" />
 
 
         </FormControl>
@@ -138,15 +166,15 @@ export const SignIn = () => {
           <Box fontSize="sm">
             <Text>Don't have an account </Text>
             <Link to="/signup" className=" text-[#3182ce] font-semibold underline">Sign Up</Link>
-            </Box>
+          </Box>
 
 
           {/* the Sign In button */}
           <Button
-          _hover={{ bg: '#2D2D2D' , color:"white" }}
+            _hover={{ bg: '#2D2D2D', color: "white" }}
             borderRadius="4px" size="lg"
             onClick={signInFunction}
-            >Sign In</Button>
+          >Sign In</Button>
         </Box>
       </Box>
     </div>
