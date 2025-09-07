@@ -176,7 +176,17 @@ const CalanderEvent = ({ value }) => {
             guestContactNumber: guestContactNumber.value,
             guestOtherDetails: guestOtherDetails.value,
             POCName: POCName.current.value,
-            POCContactNumber: POCContactNumber.current.value
+            POCContactNumber: POCContactNumber.current.value,
+            pickupLocation:pickupLocation.current.value,
+            pickUpGoogleMapsUrl:pickUpGoogleMapsUrl.current.value,
+            pickUpDateAndTime:pickUpDateAndTime.current.value,
+            dropOffLocation:dropOffLocation.current.value,
+            dropOffGoogleMapsUrl:dropOffGoogleMapsUrl.current.value,
+            dropOffDateAndTime:dropOffDateAndTime.current.value,
+            transportationOtherDetails:transportationOtherDetails.current.value,
+            hotelName:hotelName.current.value,
+            hotelCheckInDateAndTime:hotelCheckInDateAndTime.current.value,
+            hotelOtherDetails:hotelOtherDetails.current.value,
         }
 
 
@@ -185,15 +195,15 @@ const CalanderEvent = ({ value }) => {
         try {
             const addGuestDataRes = await api.post("/addguestdata", addGuestData)
 
+            console.log(addGuestDataRes.data)
             addGuestDataRes && toast({
-                title: "Sucessfully Added Guest",
-                description: "you have sucessfully added a guest to this event",
+                title: `Sucessfully Added Guest ${addGuestDataRes.data.guestName}`,
+                description: `You have sucessfully added a guest to ${addGuestDataRes.data.eventName}`,
                 status: "success",
                 isClosable: true,
                 position: "top-right"
             })
 
-            console.log(addGuestDataRes.data)
 
 
         } catch (err) {
@@ -381,9 +391,9 @@ const CalanderEvent = ({ value }) => {
                                 onChange={(e) => {
                                     setTransportation(e.target.checked)
                                     if(e.target.checked){
-                                            setModalWidth((prev) => prev + 20)
+                                            setModalWidth((prev) => prev + 30)
                                         }else{
-                                            setModalWidth((prev) => prev - 20)
+                                            setModalWidth((prev) => prev - 30)
                                         }
                                 }}
                             >Does the guest require transportation

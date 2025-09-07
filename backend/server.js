@@ -258,12 +258,12 @@ app.post("/eventapprove", async (req, res) => {
 app.post("/addguestdata" , async(req,res) => {
 
     const _id = req.body.event_id;
+    const guestName = req.body.guestName
 
 
     // searching the db for the event details
     let eventData = await event.findById(_id);
-    console.log(eventData);
-
+    
 
     // updating the db with the provided data
     eventData.guest.push(req.body);
@@ -272,7 +272,7 @@ app.post("/addguestdata" , async(req,res) => {
     await eventData.save()
 
 
-    res.send("Backend Received the data")
+    res.json({guestName , eventName :eventData.eventName})
     
 })
 
