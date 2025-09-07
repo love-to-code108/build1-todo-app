@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import api from "../Utils/axios";
 import { currentMonthAtom, currentYearAtom, eventListAtom } from "../Utils/atoms";
 import { useRecoilState } from "recoil";
+import CalanderCellUniversal from "../components/calanderCellUniversal";
 
 
 
@@ -288,7 +289,7 @@ const CalanderLandingPage = () => {
             {days.map((value, keyIndex) => {
 
               return (
-                <CalanderCells key={keyIndex} keyIndex={keyIndex} value={value} />
+                <CalanderCellUniversal key={keyIndex} keyIndex={keyIndex} value={value} />
 
               )
             })}
