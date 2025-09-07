@@ -3,11 +3,26 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { Button, Flex, Text, useToast } from "@chakra-ui/react";
 import { useEffect } from "react";
 import api from "../Utils/axios";
+import useInstantAuth from "../Utils/useInstantAuth";
 
 
 
 
 const Inbox = () => {
+  
+  
+  // instant user auth
+  useInstantAuth("/inbox");
+  
+  // toast
+  const toast = useToast();
+
+
+
+
+
+
+
   // getting the list of unapproved events from recoil
   const [unApprovedEventList, setUnApprovedEventList] = useRecoilState(
     unApprovedEventListAtom
@@ -35,8 +50,6 @@ const Inbox = () => {
 
 
 
-  // toast
-  const toast = useToast();
 
 
 
@@ -53,9 +66,9 @@ const Inbox = () => {
       flexDirection="column"
       align="center"
       
-      padding="2rem">
+      padding="1rem">
         {/* the inbox heading */}
-        <Text fontSize="3xl" fontWeight="bold" marginBottom="3rem" textAlign="left" width="90%">
+        <Text fontSize="3xl" fontWeight="bold" marginBottom="3rem" textAlign="left" width="95%">
           Inbox
         </Text>
 
@@ -104,7 +117,6 @@ const Inbox = () => {
 
             }
 
-            console.log(value.eventMonth)
             const MonthName = monthNameArray[value.eventMonth]
 
 
@@ -115,7 +127,7 @@ const Inbox = () => {
             return (
               
               <Flex
-                width="90%"
+                width="95%"
                 backgroundColor="#F0F0F0"
                 marginBottom="2rem"
                 padding="2rem"
