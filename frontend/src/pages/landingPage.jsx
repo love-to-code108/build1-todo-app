@@ -17,7 +17,6 @@ import { currentMonthAtom, currentYearAtom, eventListAtom } from "../Utils/atoms
 import { useRecoilState } from "recoil";
 import CalanderCellUniversal from "../components/calanderCellUniversal";
 import { useNavigate } from "react-router-dom";
-import useInstantAuth from "../Utils/useInstantAuth";
 
 
 
@@ -29,13 +28,9 @@ import useInstantAuth from "../Utils/useInstantAuth";
 
 const CalanderLandingPage = () => {
 
-    // trying instant sign in if possible
-    useInstantAuth("/calander")
 
 
-
-
-
+    const navigate = useNavigate()
 
     const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -54,12 +49,30 @@ const CalanderLandingPage = () => {
     const [currentMonth, setCurrentMonth] = useRecoilState(currentMonthAtom)
     const [currentYear, setCurrentYear] = useRecoilState(currentYearAtom)
 
-     
-    // init navigate
-    const navigate = useNavigate()
 
 
+    // trying instant sign in if possible
+    const jwtTokenLocalStorage = localStorage.getItem("jwtToken");
 
+
+    // trying to instant sign in if there is a jwt token
+    if (jwtTokenLocalStorage) {
+
+        try {
+            api.get("/instantsignin", {
+                headers: {
+                    Authorization: `Bearer ${jwtTokenLocalStorage}`
+                }
+            }).then(() => {
+                navigate("/calander")
+
+
+            })
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
 
 
