@@ -118,7 +118,24 @@ app.post("/signin", async (req, res) => {
 
 
 // instant sign in 
-app.get("/instantsignin" , authMiddleWare , )
+app.get("/instantsignin" , authMiddleWare , async(req,res) => {
+
+    console.log(req.user)
+    const _id  = req.user.id;
+   
+    // finding the user from the db
+    try{
+
+        // if sucessful sending the user data
+        const user = await User.findById({ _id })
+        res.json({user});
+        console.log(user);
+
+
+    }catch(err){
+        console.log(err);
+    }
+})
 
 
 

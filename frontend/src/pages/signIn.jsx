@@ -12,6 +12,7 @@ import { useToast } from '@chakra-ui/react'
 import api from "../Utils/axios";
 import { useSetRecoilState } from "recoil";
 import { User } from "../Utils/atoms";
+import InstantAuth from "../Utils/instantAuth";
 
 
 
@@ -108,22 +109,7 @@ export const SignIn = () => {
 
 
   // if there is an already existing jwt token sending it so that the user is instantly signed in without any hastle
-  const jwt = async () => {
-
-    try {
-
-      // getting the jwt token from the local storage
-      const jwtToken = localStorage.getItem("jwtToken");
-      
-    }
-
-    catch (err) {
-      console.log(err.response.data);
-    }
-
-  }
-
-  jwt()
+  InstantAuth()
 
 
 
