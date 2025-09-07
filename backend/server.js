@@ -7,6 +7,10 @@ import connectDB from "./DB/connectDB.js";
 import User from "./DB/userSchema.js";
 import event from "./DB/eventSchema.js";
 
+// jwt
+import authMiddleWare from "./auth/jsonWebToken.js";
+import jwt from "jsonwebtoken"
+
 
 dotenv.config()
 
@@ -86,19 +90,52 @@ app.post("/signin", async (req, res) => {
             return res.send({ message: "User not found" });
         }
 
-        // if user is found matching password
+        // if password does not match
         if (user.password !== password) {
             return res.json({ message: "Invalid Credentials" })
         }
 
         // if user email and password match with db
-        res.json({ message: "Login Sucessful", userOBJ: user })
+        // creating a json web token 
+        const jwtToken = jwt.sign(
+            {id: user._id , email: user.email},  // payload
+            process.env.JWT_SECRET,              // secret key ( store in .env )
+        )
+        
+        console.log(jwtToken);
+        // sending a sucess message with the token
+        res.json({ message: "Login Sucessful", jwtToken , user })
 
     } catch (err) {
         console.log(err);
     }
 })
 
+
+
+
+
+
+
+// instant sign in 
+app.get("/instantsignin" , authMiddleWare , async(req,res) => {
+
+    console.log(req.user)
+    const _id  = req.user.id;
+   
+    // finding the user from the db
+    try{
+
+        // if sucessful sending the user data
+        const user = await User.findById({ _id })
+        res.json({user});
+        console.log(user);
+
+
+    }catch(err){
+        console.log(err);
+    }
+})
 
 
 
@@ -241,6 +278,10 @@ app.post("/addguestdata" , async(req,res) => {
 
 
 
+
+
+
+app.get("/test" , authMiddleWare )
 
 
 

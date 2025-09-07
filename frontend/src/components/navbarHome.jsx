@@ -81,6 +81,17 @@ const NavbarHomePage = () => {
                     textColor="#707072"
                 ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/vehiclestatus">Vehicle Status</NavLink></Flex>
 
+
+
+
+
+                {/* signin temporary */}
+                <Flex fontSize="xl" justify="start" align="center" padding="2px" marginBottom=""
+                    width="100%" height="3rem"
+                    _hover={{ bg: '#272729', textColor:"white" }}
+                    textColor="#707072"
+                ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/signin">Sign In</NavLink></Flex>
+
             </Flex>
 
 
