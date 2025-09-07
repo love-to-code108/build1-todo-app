@@ -282,7 +282,6 @@ const CalanderCells = ({ value, keyIndex }) => {
 
           value.event.map((val, ind) => {
 
-            console.log(val)
 
             return (
 
