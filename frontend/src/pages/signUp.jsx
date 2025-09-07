@@ -103,7 +103,7 @@ export const SignUp = () => {
   return (
     <div className=" w-[100%] h-[100vh] flex justify-center items-center">
       {/* the sign up box in the middle */}
-      <Box border="2px" borderColor="#A4A3A3" borderRadius="md" padding="12">
+      <Box boxShadow="2xl" borderRadius="md" padding="12">
         {/* the Sign Up Heading */}
         <Heading fontSize="5xl" marginBottom="2.5rem">Sign Up</Heading>
 
@@ -134,19 +134,19 @@ export const SignUp = () => {
         </FormControl>
 
 
-
+        {/* already have an account sign in part */}
         {/* flex for the button and Sign In text */}
         <Box marginTop="1rem" w="20rem" className=" flex justify-between">
           {/* the Sign In text */}
           <Box fontSize="sm">
-            <Text>Already have an account </Text>
-            <Link to="/signin" className=" text-[#3182ce] font-semibold underline">Sign In</Link>
+            <Text> </Text>
+            <Link to="/signin" className=" text-[#3182ce] font-semibold underline"></Link>
             </Box>
 
 
           {/* the Sign Up button */}
           <Button
-          _hover={{ bg: '#2D2D2D' , color:"white" }}
+          variant="black"
             borderRadius="4px" onClick={signUpFunction} size="lg">Sign Up</Button>
         </Box>
       </Box>

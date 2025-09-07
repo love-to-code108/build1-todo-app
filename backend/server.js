@@ -204,7 +204,41 @@ app.post("/getallevents", async (req, res) => {
     console.log(month, year)
     const eventArray = await event.find({
         eventMonth: month,
-        eventYear: year
+        eventYear: year,
+        
+    });
+
+    console.log(eventArray);
+
+    res.send(eventArray);
+
+
+})
+
+
+
+
+
+
+
+
+
+// getting all the approved events filtered by month and year
+app.post("/getallapprovedevents", async (req, res) => {
+
+    // console.log(req.body);
+    // return;
+
+
+    const { stringMonth, stringYear } = req.body;
+    // console.log("month",stringYear);
+    const month = stringMonth;
+    const year = stringYear;
+    console.log(month, year)
+    const eventArray = await event.find({
+        eventMonth: month,
+        eventYear: year,
+        approved:true
     });
 
     console.log(eventArray);
@@ -223,7 +257,7 @@ app.post("/getallevents", async (req, res) => {
 
 
 
-// getting all the events for the inbox
+// getting all the unapproved events for the inbox
 app.get("/inbox", async (req, res) => {
 
     const unApprovedEventList = await event.find({ approved: false });
@@ -258,11 +292,11 @@ app.post("/eventapprove", async (req, res) => {
 app.post("/addguestdata" , async(req,res) => {
 
     const _id = req.body.event_id;
+    const guestName = req.body.guestName
 
 
     // searching the db for the event details
     let eventData = await event.findById(_id);
-    console.log(eventData);
 
 
     // updating the db with the provided data
@@ -272,7 +306,7 @@ app.post("/addguestdata" , async(req,res) => {
     await eventData.save()
 
 
-    res.send("Backend Received the data")
+    res.json({guestName , eventName :eventData.eventName})
     
 })
 
@@ -280,8 +314,6 @@ app.post("/addguestdata" , async(req,res) => {
 
 
 
-
-app.get("/test" , authMiddleWare )
 
 
 

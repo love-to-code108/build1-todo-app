@@ -31,7 +31,7 @@ export const SignIn = () => {
 
 
   // calling the instant signin hook
-  useInstantAuth( "/calander")
+  useInstantAuth("/calander")
 
 
 
@@ -111,7 +111,7 @@ export const SignIn = () => {
 
 
 
-  
+
 
 
 
@@ -122,7 +122,7 @@ export const SignIn = () => {
   return (
     <div className=" w-[100%] h-[100vh] flex justify-center items-center">
       {/* the sign up box in the middle */}
-      <Box border="2px" borderColor="#A4A3A3" borderRadius="md" padding="12">
+      <Box boxShadow="2xl" padding="12">
         {/* the Sign Up Heading */}
         <Heading fontSize="5xl" marginBottom="2.5rem">Sign In</Heading>
 
@@ -148,18 +148,20 @@ export const SignIn = () => {
 
 
 
+        {/* dont have an account sign up part */}
+
         {/* flex for the button and Sign In text */}
-        <Box marginTop="1rem" w="20rem" className=" flex justify-between">
+        <Box marginTop="1rem" w="20rem" className=" flex justify-end">
           {/* the Sign In text */}
           <Box fontSize="sm">
-            <Text>Don't have an account </Text>
-            <Link to="/signup" className=" text-[#3182ce] font-semibold underline">Sign Up</Link>
+            <Text></Text>
+            <Link to="/signup" className=" text-[#3182ce] font-semibold underline"></Link>
           </Box>
 
 
           {/* the Sign In button */}
           <Button
-            _hover={{ bg: '#2D2D2D', color: "white" }}
+            variant="black"
             borderRadius="4px" size="lg"
             onClick={signInFunction}
           >Sign In</Button>

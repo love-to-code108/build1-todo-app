@@ -77,6 +77,7 @@ const CalanderEvent = ({ value }) => {
         setAddGuest((prev) => !prev);
         setTransportation(false)
         setLodging(false);
+        setModalWidth(20)
         onClose();
     }
 
@@ -175,7 +176,17 @@ const CalanderEvent = ({ value }) => {
             guestContactNumber: guestContactNumber.value,
             guestOtherDetails: guestOtherDetails.value,
             POCName: POCName.current.value,
-            POCContactNumber: POCContactNumber.current.value
+            POCContactNumber: POCContactNumber.current.value,
+            pickupLocation:pickupLocation.current.value,
+            pickUpGoogleMapsUrl:pickUpGoogleMapsUrl.current.value,
+            pickUpDateAndTime:pickUpDateAndTime.current.value,
+            dropOffLocation:dropOffLocation.current.value,
+            dropOffGoogleMapsUrl:dropOffGoogleMapsUrl.current.value,
+            dropOffDateAndTime:dropOffDateAndTime.current.value,
+            transportationOtherDetails:transportationOtherDetails.current.value,
+            hotelName:hotelName.current.value,
+            hotelCheckInDateAndTime:hotelCheckInDateAndTime.current.value,
+            hotelOtherDetails:hotelOtherDetails.current.value,
         }
 
 
@@ -184,15 +195,15 @@ const CalanderEvent = ({ value }) => {
         try {
             const addGuestDataRes = await api.post("/addguestdata", addGuestData)
 
+            console.log(addGuestDataRes.data)
             addGuestDataRes && toast({
-                title: "Sucessfully Added Guest",
-                description: "you have sucessfully added a guest to this event",
+                title: `Sucessfully Added Guest ${addGuestDataRes.data.guestName}`,
+                description: `You have sucessfully added a guest to ${addGuestDataRes.data.eventName}`,
                 status: "success",
                 isClosable: true,
                 position: "top-right"
             })
 
-            console.log(addGuestDataRes.data)
 
 
         } catch (err) {
@@ -211,6 +222,10 @@ const CalanderEvent = ({ value }) => {
     // checking if the guest require lodging or not
     const [lodging, setLodging] = useState(false);
 
+
+
+    // changing modal width as per any changes
+    const [modalWidth , setModalWidth] = useState(20)
 
 
 
@@ -269,6 +284,8 @@ const CalanderEvent = ({ value }) => {
 
         {!addGuest ?
 
+
+            // this modal is for the event overview
             <Modal
                 size="xl"
                 isCentered
@@ -314,15 +331,18 @@ const CalanderEvent = ({ value }) => {
             :
 
 
+            // if you want to add a guest this modal will be shown
             <Modal
                 isCentered
                 motionPreset='slideInBottom'
                 isOpen={isOpen}
+                
 
             >
                 <ModalOverlay />
                 <ModalContent
-                    w="fit-content" maxW="90vw">
+                minWidth="30rem" maxWidth="80vw" width={`${modalWidth}%`}
+                    >
                     <ModalHeader fontSize="3xl">Guest Info</ModalHeader>
                     <ModalBody className=" flex justify-between">
 
@@ -368,7 +388,14 @@ const CalanderEvent = ({ value }) => {
 
                             {/* if the guest require transportation */}
                             <Checkbox
-                                onChange={(e) => setTransportation(e.target.checked)}
+                                onChange={(e) => {
+                                    setTransportation(e.target.checked)
+                                    if(e.target.checked){
+                                            setModalWidth((prev) => prev + 30)
+                                        }else{
+                                            setModalWidth((prev) => prev - 30)
+                                        }
+                                }}
                             >Does the guest require transportation
                             </Checkbox>
 
@@ -383,7 +410,7 @@ const CalanderEvent = ({ value }) => {
 
 
 
-
+                        {/* this is if transportation is set to true in guest info */}
                         {transportation &&
 
 
@@ -431,7 +458,16 @@ const CalanderEvent = ({ value }) => {
 
                                 {/* if the guest require transportation */}
                                 <Checkbox
-                                    onChange={(e) => setLodging(e.target.checked)}
+                                    onChange={(e) => {
+                                        setLodging(e.target.checked)
+
+                                        if(e.target.checked){
+                                            setModalWidth((prev) => prev + 20)
+                                        }else{
+                                            setModalWidth((prev) => prev - 20)
+                                        }
+                                    }
+                                }
                                 >Does the guest require Lodging
                                 </Checkbox>
 
@@ -450,7 +486,7 @@ const CalanderEvent = ({ value }) => {
 
 
 
-                        {/* lodging  */}
+                        {/* this is if lodging is set to true in guest info  */}
                         {lodging &&
 
 

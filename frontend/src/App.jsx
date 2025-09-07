@@ -9,6 +9,7 @@ import Calander from "./pages/calander.jsx";
 import Inbox from "./pages/inbox.jsx"
 import Guest from "./pages/guest.jsx"
 import VehicleStatus from "./pages/vehicleStatus.jsx"
+import CalanderLandingPage from "./pages/landingPage.jsx";
 
 
 
@@ -30,7 +31,7 @@ function App() {
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        {/* <Route path="/home" element={<Home2 />} /> */}
+        <Route path="/" element={<CalanderLandingPage/>}/>
         <Route path="/calander" element={<Calander />} />
         <Route path="/inbox" element={<Inbox />} />
         <Route path="/guest" element={<Guest />} />

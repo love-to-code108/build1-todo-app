@@ -145,7 +145,7 @@ const Calander = () => {
     try{
     // checking if this day matches with the event day
     result = eventList.filter(event => event.eventDay == d)
-    console.log(result[0])
+    
 
     }catch(err){
       console.log(err)
