@@ -223,7 +223,7 @@ app.post("/getallevents", async (req, res) => {
 
 
 
-// getting all the events for the inbox
+// getting all the unapproved events for the inbox
 app.get("/inbox", async (req, res) => {
 
     const unApprovedEventList = await event.find({ approved: false });
@@ -280,8 +280,6 @@ app.post("/addguestdata" , async(req,res) => {
 
 
 
-
-app.get("/test" , authMiddleWare )
 
 
 
