@@ -12,8 +12,8 @@ import { useToast } from '@chakra-ui/react'
 import api from "../Utils/axios";
 import { useSetRecoilState } from "recoil";
 import { User } from "../Utils/atoms";
-import InstantAuth from "../Utils/instantAuth";
-
+import useInstantAuth from "../Utils/useInstantAuth.js";
+import { useEffect } from "react";
 
 
 
@@ -29,6 +29,9 @@ export const SignIn = () => {
 
   const navigate = useNavigate();
 
+
+  // calling the instant signin hook
+  useInstantAuth( "/calander")
 
 
 
@@ -87,7 +90,7 @@ export const SignIn = () => {
 
       // navigating to the home page
       console.log(signInResponse.data.user)
-      const setUser = signInResponse.data.user;
+      setUser(signInResponse.data.user);
 
       localStorage.setItem("jwtToken", signInResponse.data.jwtToken);
 
@@ -108,8 +111,7 @@ export const SignIn = () => {
 
 
 
-  // if there is an already existing jwt token sending it so that the user is instantly signed in without any hastle
-  InstantAuth()
+  
 
 
 
