@@ -204,7 +204,41 @@ app.post("/getallevents", async (req, res) => {
     console.log(month, year)
     const eventArray = await event.find({
         eventMonth: month,
-        eventYear: year
+        eventYear: year,
+        
+    });
+
+    console.log(eventArray);
+
+    res.send(eventArray);
+
+
+})
+
+
+
+
+
+
+
+
+
+// getting all the approved events filtered by month and year
+app.post("/getallapprovedevents", async (req, res) => {
+
+    // console.log(req.body);
+    // return;
+
+
+    const { stringMonth, stringYear } = req.body;
+    // console.log("month",stringYear);
+    const month = stringMonth;
+    const year = stringYear;
+    console.log(month, year)
+    const eventArray = await event.find({
+        eventMonth: month,
+        eventYear: year,
+        approved:true
     });
 
     console.log(eventArray);
@@ -263,7 +297,7 @@ app.post("/addguestdata" , async(req,res) => {
 
     // searching the db for the event details
     let eventData = await event.findById(_id);
-    
+
 
     // updating the db with the provided data
     eventData.guest.push(req.body);
