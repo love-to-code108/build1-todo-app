@@ -321,19 +321,40 @@ app.post("/addorganization", async (req, res) => {
 
     //taking the data from the body
     const organizationName = req.body.organizationName;
-    
+
+    // checking if organization already exist or not
+    const organizationAlreadyExists = Organization.find({ organizationName })
+
+    // if the organization name already exists
+    if (organizationAlreadyExists) {
+     
+        res.status(401).json({
+            message: "Organization name already exists"
+        })
+
+        return;
+    }
+
 
     // creating new organization
     const newOrganization = new Organization({
         organizationName
     })
-    
+
     await newOrganization.save()
 
-    // sending a success response on sucessfull save
-    console.log(newOrganization)
-    res.send(200)
-    
+
+    // getting an array of all organizations
+
+    const organizationList = await Organization.find({})
+
+
+    // sending a list of all organizations back to the frontend
+    console.log(organizationList)
+    res.status(200).json({
+        organizationList: organizationList
+    })
+
 })
 
 

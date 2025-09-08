@@ -1,16 +1,17 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  FormControl,
-  FormLabel,
-  Input,
-  useToast,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+    FormControl,
+    FormLabel,
+    Input,
+    useToast,
+    Text
 } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react';
 import { useRef } from 'react';
@@ -26,39 +27,53 @@ const AddOrganization = () => {
     const toast = useToast()
 
     // adding organization name to the backend
-    const addOrganizationName = async() => {
+    const addOrganizationName = async () => {
 
 
         // only send it to the backend if its not null
-        if(organizationName.current.value){
-            const addOrganizationNameRes = await api.post("/addorganization",{
-                organizationName:organizationName.current.value
-            })
+        if (organizationName.current.value) {
 
+            try {
 
+                const addOrganizationNameRes = await api.post("/addorganization", {
+                    organizationName: organizationName.current.value
+                })
 
+                
+                // on sucessfully adding organization
+                toast({
+                    title: "Sucessfully added new organization",
+                    status: "success",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top-right"
+                })
 
-            // on sucessfully adding organization
-            toast({
-                title: "Sucessfully added new organization",
-                status:"success",
-                duration:9000,
-                isClosable:true,
-                position:"top-right"
-            })
+            } catch (err) {
+
+                // on error
+                toast({
+                    title: "Organization name already taken",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top-right"
+                })
+            }
+
         }
 
 
         // if the user didnot enter any value
-        else{
+        else {
 
             // on error
             toast({
                 title: "Enter a name for the new organization",
-                status:"error",
-                duration:9000,
-                isClosable:true,
-                position:"top-right"
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+                position: "top-right"
             })
         }
 
@@ -70,39 +85,43 @@ const AddOrganization = () => {
 
 
 
-    return(
+    return (
         <div className=' w-[100%]'>
             <Button onClick={onOpen} width="100%" >Add Clubs</Button>
 
 
-        <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add Organizations</ModalHeader>
-          <ModalCloseButton />
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Add Organizations</ModalHeader>
+                    <ModalCloseButton />
 
 
-          <ModalBody>
-            
+                    <ModalBody>
 
-            {/* taking the name of the organization as input */}
-            <FormControl>
-                <FormLabel>Enter organization name</FormLabel>
-                <Input
-                ref={organizationName}
-                type='text' placeholder='Name'/>
-            </FormControl>
 
-          </ModalBody>
+                        {/* taking the name of the organization as input */}
+                        <FormControl>
+                            <FormLabel>Enter organization name</FormLabel>
+                            <Input
+                                ref={organizationName}
+                                type='text' placeholder='Name' />
+                        </FormControl>
 
-          <ModalFooter>
-            <Button 
-            onClick={addOrganizationName}
-            variant='black'>Add</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-      </div>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button
+                            onClick={addOrganizationName}
+                            variant='black'>Add</Button>
+
+
+                        {/* showing list of all organizations */}
+                        <Text></Text>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </div>
     );
 }
 
