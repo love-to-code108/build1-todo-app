@@ -131,6 +131,12 @@ export const SignUp = () => {
           <Input id="SignUpCheckPassword"
           onChange={(e) => {setCheckPass(e.target.value)}}
            marginBottom="1rem" type="password" placeholder="Password"/>
+
+
+
+
+           {/* select organization */}
+           <FormLabel></FormLabel>
         </FormControl>
 
 
