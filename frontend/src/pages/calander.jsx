@@ -13,8 +13,10 @@ import { ChevronLeft, ChevronRight, Divide } from "lucide-react"
 import CalanderCells from "../components/calanderCell";
 import { useEffect } from "react";
 import api from "../Utils/axios";
-import { currentMonthAtom, currentYearAtom, eventListAtom } from "../Utils/atoms";
+import { currentMonthAtom, currentYearAtom, eventListAtom, User } from "../Utils/atoms";
 import { useRecoilState } from "recoil";
+import useInstantAuth from "../Utils/useInstantAuth";
+
 
 
 
@@ -25,6 +27,11 @@ import { useRecoilState } from "recoil";
 
 
 const Calander = () => {
+  
+
+
+
+
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const year = currentDate.getFullYear();
@@ -41,7 +48,9 @@ const Calander = () => {
   const [eventList, setEventList] = useRecoilState(eventListAtom)
   const [currentMonth, setCurrentMonth] = useRecoilState(currentMonthAtom)
   const [currentYear, setCurrentYear] = useRecoilState(currentYearAtom)
-
+  const [user , setUser] = useRecoilState(User)
+  
+  console.log(user)
 
 
 
@@ -53,7 +62,6 @@ const Calander = () => {
   useEffect(() => {
 
 
-    try{
     const currentMonthEventListApiCall = async () => {
 
 
@@ -69,18 +77,26 @@ const Calander = () => {
       // sending data to get all the array of events
       try {
 
+
+        // if admin get all the events 
         eventListResponse = await api.post("/getallevents", {
 
           stringMonth,
           stringYear,
+          role:user.role,
+          organization:user.organization
+          
 
         })
+
+        setEventList(eventListResponse.data);
+        console.log(eventListResponse.data)
+
+
 
       } catch (err) {
         console.log(err);
       }
-
-      setEventList(eventListResponse.data);
 
     }
 
@@ -88,13 +104,10 @@ const Calander = () => {
 
     // calling the above function in the use effect
     currentMonthEventListApiCall();
-  }
-  catch(err){
-    console.log(err);
-  }
 
 
-  }, [month])
+
+  }, [month,user])
 
 
 
@@ -142,19 +155,19 @@ const Calander = () => {
 
     let result = []
 
-    try{
-    // checking if this day matches with the event day
-    result = eventList.filter(event => event.eventDay == d)
-    
+    try {
+      // checking if this day matches with the event day
+      result = eventList.filter(event => event.eventDay == d)
 
-    }catch(err){
+
+    } catch (err) {
       console.log(err)
     }
 
     // if we get something from searcing
     if (result != undefined) {
 
-      console.log("working");
+
       const calanderCellObj = {
         dayNumber: d,
         monthNumber: month + 1,
@@ -218,8 +231,8 @@ const Calander = () => {
     <div className=" flex w-[100%]">
 
       {/* the ghost navbar */}
-      <Flex 
-      width="20%"
+      <Flex
+        width="20%"
       ></Flex>
 
 

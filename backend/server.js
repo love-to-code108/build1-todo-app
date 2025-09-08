@@ -38,7 +38,7 @@ connectDB();
 // the signup route
 app.post('/signup', async (req, res) => {
 
-    const { email, password , organization } = req.body;
+    const { email, password, organization } = req.body;
 
     const newUser = new User({
         email,
@@ -122,7 +122,7 @@ app.post("/signin", async (req, res) => {
 // instant sign in 
 app.get("/instantsignin", authMiddleWare, async (req, res) => {
 
-    console.log(req.user)
+
     const _id = req.user.id;
 
     // finding the user from the db
@@ -130,8 +130,9 @@ app.get("/instantsignin", authMiddleWare, async (req, res) => {
 
         // if sucessful sending the user data
         const user = await User.findById({ _id })
+        console.log(user)
         res.json({ user });
-        console.log(user);
+
 
 
     } catch (err) {
@@ -192,25 +193,25 @@ app.post("/eventcreation", async (req, res) => {
 
 
 
-// getting all the events filtered by month and year
+// getting all the events filtered by month year and organization
 app.post("/getallevents", async (req, res) => {
 
     // console.log(req.body);
     // return;
 
+    console.log
+    const { stringMonth, stringYear, role, organization } = req.body;
 
-    const { stringMonth, stringYear } = req.body;
-    // console.log("month",stringYear);
     const month = stringMonth;
     const year = stringYear;
-    console.log(month, year)
+    console.log(role)
+
+
+
     const eventArray = await event.find({
         eventMonth: month,
         eventYear: year,
-
-    });
-
-    console.log(eventArray);
+    })
 
     res.send(eventArray);
 
@@ -328,7 +329,7 @@ app.post("/addorganization", async (req, res) => {
 
     // if the organization name already exists
     if (organizationAlreadyExists[0]) {
-     
+
         res.status(401).json({
             message: "Organization name already exists"
         })
@@ -361,11 +362,11 @@ app.post("/addorganization", async (req, res) => {
 
 
 // get organization list
-app.get("/organizationlist", async(req,res) =>{
+app.get("/organizationlist", async (req, res) => {
 
     const organizationList = await Organization.find({});
     res.status(200).json({
-        organizationlist : organizationList
+        organizationlist: organizationList
     })
 
 })
