@@ -10,6 +10,7 @@ import event from "./DB/eventSchema.js";
 // jwt
 import authMiddleWare from "./auth/jsonWebToken.js";
 import jwt from "jsonwebtoken"
+import Organization from "./DB/organizationSchema.js";
 
 
 dotenv.config()
@@ -37,11 +38,12 @@ connectDB();
 // the signup route
 app.post('/signup', async (req, res) => {
 
-    const { email, password } = req.body;
+    const { email, password, organization } = req.body;
 
     const newUser = new User({
-        email: email,
-        password: password
+        email,
+        password,
+        organization
     });
 
 
@@ -98,13 +100,13 @@ app.post("/signin", async (req, res) => {
         // if user email and password match with db
         // creating a json web token 
         const jwtToken = jwt.sign(
-            {id: user._id , email: user.email},  // payload
+            { id: user._id, email: user.email },  // payload
             process.env.JWT_SECRET,              // secret key ( store in .env )
         )
-        
+
         console.log(jwtToken);
         // sending a sucess message with the token
-        res.json({ message: "Login Sucessful", jwtToken , user })
+        res.json({ message: "Login Sucessful", jwtToken, user })
 
     } catch (err) {
         console.log(err);
@@ -118,21 +120,22 @@ app.post("/signin", async (req, res) => {
 
 
 // instant sign in 
-app.get("/instantsignin" , authMiddleWare , async(req,res) => {
+app.get("/instantsignin", authMiddleWare, async (req, res) => {
 
-    console.log(req.user)
-    const _id  = req.user.id;
-   
+
+    const _id = req.user.id;
+
     // finding the user from the db
-    try{
+    try {
 
         // if sucessful sending the user data
         const user = await User.findById({ _id })
-        res.json({user});
-        console.log(user);
+        console.log(user)
+        res.json({ user });
 
 
-    }catch(err){
+
+    } catch (err) {
         console.log(err);
     }
 })
@@ -190,25 +193,25 @@ app.post("/eventcreation", async (req, res) => {
 
 
 
-// getting all the events filtered by month and year
+// getting all the events filtered by month year and organization
 app.post("/getallevents", async (req, res) => {
 
     // console.log(req.body);
     // return;
 
+    console.log
+    const { stringMonth, stringYear, role, organization } = req.body;
 
-    const { stringMonth, stringYear } = req.body;
-    // console.log("month",stringYear);
     const month = stringMonth;
     const year = stringYear;
-    console.log(month, year)
+    console.log(role)
+
+
+
     const eventArray = await event.find({
         eventMonth: month,
         eventYear: year,
-        
-    });
-
-    console.log(eventArray);
+    })
 
     res.send(eventArray);
 
@@ -238,7 +241,7 @@ app.post("/getallapprovedevents", async (req, res) => {
     const eventArray = await event.find({
         eventMonth: month,
         eventYear: year,
-        approved:true
+        approved: true
     });
 
     console.log(eventArray);
@@ -289,7 +292,7 @@ app.post("/eventapprove", async (req, res) => {
 
 
 // add guest data
-app.post("/addguestdata" , async(req,res) => {
+app.post("/addguestdata", async (req, res) => {
 
     const _id = req.body.event_id;
     const guestName = req.body.guestName
@@ -301,17 +304,72 @@ app.post("/addguestdata" , async(req,res) => {
 
     // updating the db with the provided data
     eventData.guest.push(req.body);
-    
+
     // saving the guest data
     await eventData.save()
 
 
-    res.json({guestName , eventName :eventData.eventName})
-    
+    res.json({ guestName, eventName: eventData.eventName })
+
 })
 
 
 
+
+
+
+// add organizations
+app.post("/addorganization", async (req, res) => {
+
+    //taking the data from the body
+    const organizationName = req.body.organizationName;
+
+    // checking if organization already exist or not
+    const organizationAlreadyExists = await Organization.find({ organizationName })
+
+    // if the organization name already exists
+    if (organizationAlreadyExists[0]) {
+
+        res.status(401).json({
+            message: "Organization name already exists"
+        })
+
+        return;
+    }
+
+
+    // creating new organization
+    const newOrganization = new Organization({
+        organizationName
+    })
+
+    await newOrganization.save()
+
+
+    // getting an array of all organizations
+    const organizationList = await Organization.find({})
+
+
+    // sending a list of all organizations back to the frontend
+    console.log(organizationList)
+    res.status(200).json({
+        organizationList: organizationList
+    })
+
+})
+
+
+
+
+// get organization list
+app.get("/organizationlist", async (req, res) => {
+
+    const organizationList = await Organization.find({});
+    res.status(200).json({
+        organizationlist: organizationList
+    })
+
+})
 
 
 

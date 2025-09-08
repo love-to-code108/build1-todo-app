@@ -43,3 +43,8 @@ export const monthNameArrayAtom = atom({
         "December"
     ]
 })
+
+export const organizationListAtom = atom({
+    key:"organizationListAtom",
+    default:[]
+})
