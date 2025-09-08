@@ -1,4 +1,4 @@
-import { Button, Box, Heading, Input, Flex, Text } from "@chakra-ui/react";
+import { Button, Box, Heading, Input, Flex, Text, Select } from "@chakra-ui/react";
 import {
   FormControl,
   FormLabel,
@@ -136,7 +136,10 @@ export const SignUp = () => {
 
 
            {/* select organization */}
-           <FormLabel></FormLabel>
+           <FormLabel>Select Organization</FormLabel>
+           <Select>
+              <option>Hello</option>
+           </Select>
         </FormControl>
 
 
