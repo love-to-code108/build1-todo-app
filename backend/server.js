@@ -323,10 +323,10 @@ app.post("/addorganization", async (req, res) => {
     const organizationName = req.body.organizationName;
 
     // checking if organization already exist or not
-    const organizationAlreadyExists = Organization.find({ organizationName })
+    const organizationAlreadyExists = await Organization.find({ organizationName })
 
     // if the organization name already exists
-    if (organizationAlreadyExists) {
+    if (organizationAlreadyExists[0]) {
      
         res.status(401).json({
             message: "Organization name already exists"
@@ -345,7 +345,6 @@ app.post("/addorganization", async (req, res) => {
 
 
     // getting an array of all organizations
-
     const organizationList = await Organization.find({})
 
 
@@ -353,6 +352,19 @@ app.post("/addorganization", async (req, res) => {
     console.log(organizationList)
     res.status(200).json({
         organizationList: organizationList
+    })
+
+})
+
+
+
+
+// get organization list
+app.get("/organizationlist", async(req,res) =>{
+
+    const organizationList = await Organization.find({});
+    res.status(200).json({
+        organizationlist : organizationList
     })
 
 })
