@@ -3,7 +3,7 @@ import { NavLink, useLocation } from "react-router-dom"
 import { Button, Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { User } from "../Utils/atoms";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 
 
@@ -13,6 +13,8 @@ const NavbarHomePage = () => {
 
     const location = useLocation()
     const [display, setDisplay] = useState();
+    const [user, setUser] = useRecoilState(User)
+    const navigate = useNavigate()
 
     useEffect(() => {
 
@@ -25,21 +27,23 @@ const NavbarHomePage = () => {
     }, [location.pathname])
 
 
-    const setUser = useSetRecoilState(User)
-    const navigate = useNavigate()
 
 
     // the signout button function 
     const SignOut = () => {
 
 
-        // init all things
-
+        // signing out the user
         setUser(null)
         console.log("Pressed Log Out")
         localStorage.removeItem("jwtToken");
         navigate("/");
     }
+
+
+
+    // checking the role of the user
+
 
 
 
@@ -73,11 +77,14 @@ const NavbarHomePage = () => {
 
 
                 {/* inbox */}
-                <Flex fontSize="xl" justify="start" align="center" padding="2px" marginBottom="" width="100%" height="3rem"
-                    _hover={{ bg: '#272729', textColor: "white" }}
-                    textColor="#707072"
-                ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/inbox">Inbox</NavLink></Flex>
+                {
+                    user.role === "admin" &&
 
+                    <Flex fontSize="xl" justify="start" align="center" padding="2px" marginBottom="" width="100%" height="3rem"
+                        _hover={{ bg: '#272729', textColor: "white" }}
+                        textColor="#707072"
+                    ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/inbox">Inbox</NavLink></Flex>
+                }
 
 
 
@@ -104,12 +111,15 @@ const NavbarHomePage = () => {
 
 
 
-                {/* signin temporary */}
-                <Flex fontSize="xl" justify="start" align="center" padding="2px" marginBottom=""
-                    width="100%" height="3rem"
-                    _hover={{ bg: '#272729', textColor: "white" }}
-                    textColor="#707072"
-                ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/signup">Add Organizers</NavLink></Flex>
+
+                {/* add organizer temporary */}
+                { user.role === "admin" &&
+                    <Flex fontSize="xl" justify="start" align="center" padding="2px" marginBottom=""
+                        width="100%" height="3rem"
+                        _hover={{ bg: '#272729', textColor: "white" }}
+                        textColor="#707072"
+                    ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/signup">Add Organizers</NavLink></Flex>
+                }
 
 
 
