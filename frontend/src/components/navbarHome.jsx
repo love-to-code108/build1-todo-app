@@ -5,17 +5,32 @@ import { useNavigate } from "react-router-dom";
 import { User } from "../Utils/atoms";
 import { useRecoilState } from "recoil";
 import api from "../Utils/axios";
+import AddOrganization from "./addOrganization";
+
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    useDisclosure,
+} from '@chakra-ui/react'
 
 
 
 const NavbarHomePage = () => {
 
 
-
+    // init
     const location = useLocation()
     const [display, setDisplay] = useState();
     const [user, setUser] = useRecoilState(User)
     const navigate = useNavigate()
+    const [addOrganization, setAddOrganization] = useState(false)
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
 
     useEffect(() => {
 
@@ -150,6 +165,21 @@ const NavbarHomePage = () => {
                             textColor="#707072"
                         ><NavLink className=" w-[100%] h-[100%] flex justify-start items-center pl-[1rem]" to="/signup">Add Organizers</NavLink></Flex>
                     }
+
+
+
+
+
+                    {/* add organizations temporary */}
+                    {user.role === "admin" &&
+                        <Flex fontSize="xl" justify="start" align="center" padding="2px" marginBottom=""
+                            width="100%" height="3rem"
+                            _hover={{ bg: '#272729', textColor: "white" }}
+                            textColor="#707072"
+                        ><AddOrganization/></Flex>
+
+                    }
+                    
 
 
 

@@ -10,6 +10,7 @@ import event from "./DB/eventSchema.js";
 // jwt
 import authMiddleWare from "./auth/jsonWebToken.js";
 import jwt from "jsonwebtoken"
+import Organization from "./DB/organizationSchema.js";
 
 
 dotenv.config()
@@ -98,13 +99,13 @@ app.post("/signin", async (req, res) => {
         // if user email and password match with db
         // creating a json web token 
         const jwtToken = jwt.sign(
-            {id: user._id , email: user.email},  // payload
+            { id: user._id, email: user.email },  // payload
             process.env.JWT_SECRET,              // secret key ( store in .env )
         )
-        
+
         console.log(jwtToken);
         // sending a sucess message with the token
-        res.json({ message: "Login Sucessful", jwtToken , user })
+        res.json({ message: "Login Sucessful", jwtToken, user })
 
     } catch (err) {
         console.log(err);
@@ -118,21 +119,21 @@ app.post("/signin", async (req, res) => {
 
 
 // instant sign in 
-app.get("/instantsignin" , authMiddleWare , async(req,res) => {
+app.get("/instantsignin", authMiddleWare, async (req, res) => {
 
     console.log(req.user)
-    const _id  = req.user.id;
-   
+    const _id = req.user.id;
+
     // finding the user from the db
-    try{
+    try {
 
         // if sucessful sending the user data
         const user = await User.findById({ _id })
-        res.json({user});
+        res.json({ user });
         console.log(user);
 
 
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
 })
@@ -205,7 +206,7 @@ app.post("/getallevents", async (req, res) => {
     const eventArray = await event.find({
         eventMonth: month,
         eventYear: year,
-        
+
     });
 
     console.log(eventArray);
@@ -238,7 +239,7 @@ app.post("/getallapprovedevents", async (req, res) => {
     const eventArray = await event.find({
         eventMonth: month,
         eventYear: year,
-        approved:true
+        approved: true
     });
 
     console.log(eventArray);
@@ -289,7 +290,7 @@ app.post("/eventapprove", async (req, res) => {
 
 
 // add guest data
-app.post("/addguestdata" , async(req,res) => {
+app.post("/addguestdata", async (req, res) => {
 
     const _id = req.body.event_id;
     const guestName = req.body.guestName
@@ -301,17 +302,39 @@ app.post("/addguestdata" , async(req,res) => {
 
     // updating the db with the provided data
     eventData.guest.push(req.body);
-    
+
     // saving the guest data
     await eventData.save()
 
 
-    res.json({guestName , eventName :eventData.eventName})
-    
+    res.json({ guestName, eventName: eventData.eventName })
+
 })
 
 
 
+
+
+
+// add organizations
+app.post("/addorganization", async (req, res) => {
+
+    //taking the data from the body
+    const organizationName = req.body.organizationName;
+    
+
+    // creating new organization
+    const newOrganization = new Organization({
+        organizationName
+    })
+    
+    await newOrganization.save()
+
+    // sending a success response on sucessfull save
+    console.log(newOrganization)
+    res.send(200)
+    
+})
 
 
 
