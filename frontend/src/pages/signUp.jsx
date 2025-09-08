@@ -9,6 +9,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from '@chakra-ui/react'
 import api from "../Utils/axios";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { organizationListAtom } from "../Utils/atoms";
+import { useRef } from "react";
 
 
 
@@ -20,15 +24,30 @@ export const SignUp = () => {
     // useState to collect data from the inputs:
     const[email, setEmail] = useState();
     const[password, setPassword] = useState();
+    const organizationName = useRef("");
     const[checkPass, setCheckPass] = useState();
-
-
-    // Configuring the toast
     const toast = useToast()
-
-
     const navigate = useNavigate();
+    const [organizationList , setOrganizationList] = useRecoilState(organizationListAtom)
 
+
+
+    // getting the list of organizations
+    useEffect(() => {
+
+        // getting the organization array list
+        const gettingOrganizationListFromBackend = async () => {
+
+            // sending the backend a request to fetch the list of all organization
+            const organizationListRes = await api.get("/organizationlist")
+            console.log(organizationListRes.data.organizationlist);
+            setOrganizationList(organizationListRes.data.organizationlist)
+        }
+
+
+        gettingOrganizationListFromBackend()
+
+    }, [])
 
 
     // when the sign up button is pressed
@@ -48,11 +67,26 @@ export const SignUp = () => {
         }
 
 
+
+        if(!organizationName){
+            toast({
+                title: "Organization Name not selected",
+                status:"error",
+                duration:9000,
+                isClosable:true,
+                position:"top-right"
+            })
+
+            return;
+        }
+
+
         // sending data to the backend
         try{
             const signUpRes = await api.post("/signup",{
                 email,
-                password
+                password,
+                organization : organizationName.current.value
             });
 
 
@@ -137,8 +171,18 @@ export const SignUp = () => {
 
            {/* select organization */}
            <FormLabel>Select Organization</FormLabel>
-           <Select>
-              <option>Hello</option>
+           <Select ref={organizationName} variant="filled">
+              {
+                organizationList &&
+
+                organizationList.map((value, key) => {
+
+                  return(
+                    <option key={key}>{value.organizationName}</option>
+                  )
+
+                })
+              }
            </Select>
         </FormControl>
 

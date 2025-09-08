@@ -38,11 +38,12 @@ connectDB();
 // the signup route
 app.post('/signup', async (req, res) => {
 
-    const { email, password } = req.body;
+    const { email, password , organization } = req.body;
 
     const newUser = new User({
-        email: email,
-        password: password
+        email,
+        password,
+        organization
     });
 
 
