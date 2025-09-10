@@ -165,6 +165,7 @@ app.post("/eventcreation", async (req, res) => {
         eventVenue,
         orgName,
         orgContact,
+        registrationLink
     } = req.body;
 
 
@@ -178,7 +179,8 @@ app.post("/eventcreation", async (req, res) => {
         eventVenue: eventVenue,
         orgName: orgName,
         orgContact: orgContact,
-        approved: false
+        registrationLink:registrationLink,
+        approved: false,
     })
 
 

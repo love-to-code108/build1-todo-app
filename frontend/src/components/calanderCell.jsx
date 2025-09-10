@@ -51,11 +51,20 @@ const CalanderCells = ({ value, keyIndex }) => {
   const eventVenue = useRef("");
   const orgName = useRef("");
   const orgContact = useRef("");
+  const registrationLink = useRef("");
 
   // init toast 
   const toast = useToast()
 
 
+
+
+
+
+
+
+
+  
   // event creation form funciton
   const submitEventCreationForm = async () => {
 
@@ -140,6 +149,17 @@ const CalanderCells = ({ value, keyIndex }) => {
       })
 
       return;
+    } else if (registrationLink.current.value == "") {
+
+      toast({
+        title: "Registration Link Missing",
+        description: "Provide a valid registration link so that the participants can register",
+        status: "error",
+        isClosable: true,
+        position: "top-right"
+      })
+
+      return;
     }
 
 
@@ -167,7 +187,8 @@ const CalanderCells = ({ value, keyIndex }) => {
       eventStartTime: eventStartTime.current.value,
       eventVenue: eventVenue.current.value,
       orgName: orgName.current.value,
-      orgContact: orgContact.current.value
+      orgContact: orgContact.current.value,
+      registrationLink: registrationLink.current.value
     }
 
 
@@ -306,7 +327,7 @@ const CalanderCells = ({ value, keyIndex }) => {
 
 
 
-      {/* The modal */}
+      {/* create event form */}
       {value.dayNumber &&
         <Modal
           size="xl"
@@ -363,6 +384,16 @@ const CalanderCells = ({ value, keyIndex }) => {
                   <InputLeftAddon>+91</InputLeftAddon>
                   <Input ref={orgContact} placeholder="Phone Number" type="number" />
                 </InputGroup>
+
+
+                {/* Organization Contact Info  */}
+                <FormLabel>Registration Link</FormLabel>
+                <InputGroup margin>
+                  <InputLeftAddon>https://</InputLeftAddon>
+                  <Input ref={registrationLink} placeholder="Google Form link" type="text" />
+                </InputGroup>
+
+
 
               </FormControl>
             </ModalBody>
