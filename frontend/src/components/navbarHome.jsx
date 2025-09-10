@@ -85,7 +85,7 @@ const NavbarHomePage = () => {
 
 
     // checking the role of the user
-    console.log(user)
+    // console.log(user)
 
     if (!user) {
         return;

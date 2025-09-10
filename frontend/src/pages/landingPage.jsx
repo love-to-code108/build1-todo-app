@@ -172,7 +172,7 @@ const CalanderLandingPage = () => {
         try {
             // checking if this day matches with the event day
             result = eventList.filter(event => event.eventDay == d)
-            console.log(result[0])
+            // console.log(result[0])
 
         } catch (err) {
             console.log(err)
@@ -181,7 +181,7 @@ const CalanderLandingPage = () => {
         // if we get something from searcing
         if (result != undefined) {
 
-            console.log("working");
+            // console.log("working");
             const calanderCellObj = {
                 dayNumber: d,
                 monthNumber: month + 1,
