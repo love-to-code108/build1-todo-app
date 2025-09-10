@@ -8,6 +8,8 @@ import {
     ModalBody,
     ModalCloseButton,
 } from '@chakra-ui/react'
+import { useRecoilValue } from "recoil";
+import { monthNameArrayAtom } from "../../Utils/atoms";
 
 
 
@@ -19,20 +21,13 @@ const CalanderRegisterOnlyCell = ({ value }) => {
 
     // init
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const MonthName = "July"
+    const monthNameArray = useRecoilValue(monthNameArrayAtom)
     const toast = useToast()
 
 
-    console.log(value);
+    // getting the month
+    const MonthName = monthNameArray[value.eventMonth - 1]
 
-
-
-    // open the event overview part and the register button
-    const whenSomeOneClicksOnTheEvent = async () => {
-
-        onOpen();
-
-    }
 
 
 
@@ -73,7 +68,7 @@ const CalanderRegisterOnlyCell = ({ value }) => {
                 borderRadius={4}
                 fontSize="sm"
                 fontWeight="bold"
-                onClick={whenSomeOneClicksOnTheEvent}
+                onClick={() => onOpen()}
             >{value.eventName}</Flex>
 
 
