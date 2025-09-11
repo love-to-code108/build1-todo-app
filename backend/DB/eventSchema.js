@@ -12,6 +12,7 @@ const eventSchema = new mongoose.Schema({
     orgName:{ type:String, required: true },
     orgContact:{ type:String, required: true },
     approved:{ type:Boolean, required:true , default: false},
+    registrationLink:{type:String, required:true},
     guest:{type:Array}
 })
 

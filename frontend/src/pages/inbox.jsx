@@ -1,32 +1,41 @@
 import { monthNameArrayAtom, unApprovedEventListAtom } from "../Utils/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Button, Flex, Text, useToast } from "@chakra-ui/react";
+import { Button, Flex, Text, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect } from "react";
 import api from "../Utils/axios";
 import useInstantAuth from "../Utils/useInstantAuth";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 
 
 
 
 const Inbox = () => {
-  
-  
+
+
   // instant user auth
   useInstantAuth("/inbox");
-  
   // toast
   const toast = useToast();
-
-
-
-
-
-
-
   // getting the list of unapproved events from recoil
   const [unApprovedEventList, setUnApprovedEventList] = useRecoilState(
     unApprovedEventListAtom
   );
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+
+
+
+
+
+
 
 
 
@@ -57,16 +66,16 @@ const Inbox = () => {
   return (
     <div className=" w-[100%] flex ">
 
-      <Flex 
-      width="20%"
+      <Flex
+        width="20%"
       ></Flex>
 
-      <Flex 
-      width="80%"
-      flexDirection="column"
-      align="center"
-      
-      padding="1rem">
+      <Flex
+        width="80%"
+        flexDirection="column"
+        align="center"
+
+        padding="1rem">
         {/* the inbox heading */}
         <Text fontSize="3xl" fontWeight="bold" marginBottom="3rem" textAlign="left" width="95%">
           Inbox
@@ -85,10 +94,11 @@ const Inbox = () => {
 
 
 
-            // updating the approved state
-            const approveFunction = async () => {
+            // if the event is approved or unapproved
+            const approveUnapproveFunction = async (approved) => {
               const _id = value._id;
-              const approved = true;
+
+              onClose();
 
               try {
                 const approveEventResponse = await api.post("/eventapprove", {
@@ -96,14 +106,30 @@ const Inbox = () => {
                   approved,
                 });
 
-                toast({
-                  title: "Event Approved",
-                  description: "The event has been successfully approved and is now visible to participants.",
-                  status: "success",
-                  isClosable: "true",
-                  position: "top-right",
-                  duration: 4000,
-                });
+
+
+                // if delete successful
+                if (approveEventResponse.data.status == "error") {
+
+                  toast(
+                    approveEventResponse.data
+                  )
+                }
+
+                // if event is approved
+                else if (approveEventResponse.data.status == "success") {
+                  toast({
+                    title: "Event Approved",
+                    description: "The event has been successfully approved and is now visible to participants.",
+                    status: "success",
+                    isClosable: "true",
+                    position: "top-right",
+                    duration: 4000,
+                  });
+                }
+
+
+
 
               } catch (err) {
                 console.log(err);
@@ -117,6 +143,10 @@ const Inbox = () => {
 
             }
 
+
+
+
+            // getting the month names
             const MonthName = monthNameArray[value.eventMonth]
 
 
@@ -125,7 +155,7 @@ const Inbox = () => {
 
             // returning the array of unapproved events
             return (
-              
+
               <Flex
                 width="95%"
                 backgroundColor="#F0F0F0"
@@ -166,7 +196,9 @@ const Inbox = () => {
                   backgroundColor=""
                 >
                   {/* Decline Button */}
-                  <Button variant="outline" colorScheme="black">
+                  <Button
+                    onClick={onOpen}
+                    variant="outline" colorScheme="black">
                     Decline
                   </Button>
 
@@ -175,10 +207,33 @@ const Inbox = () => {
                     marginLeft="2rem"
                     backgroundColor="black"
                     colorScheme="black"
-                    onClick={approveFunction}
+                    onClick={() => approveUnapproveFunction(true)}
                   >
                     Approve
                   </Button>
+
+
+
+                  {/* the modal for decline */}
+                  <Modal isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalHeader fontSize="2xl">Delete Event</ModalHeader>
+                      <ModalCloseButton />
+                      <ModalBody>
+                       <Text>Are you sure you want to delete this event</Text>
+                      </ModalBody>
+
+                      <ModalFooter>
+                        <Button 
+                        onClick={() => approveUnapproveFunction(null)}
+                        colorScheme='red'>Delete</Button>
+                      </ModalFooter>
+                    </ModalContent>
+                  </Modal>
+
+
+
                 </Flex>
               </Flex>
             );

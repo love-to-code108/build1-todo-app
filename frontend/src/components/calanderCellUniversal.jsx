@@ -1,6 +1,7 @@
 
 import { Flex, Text } from "@chakra-ui/react";
 import CalanderEvent from "./calanderEventsInCalanderCells";
+import CalanderRegisterOnlyCell from "./calander/calanderRegisterCell";
 
 
 const CalanderCellUniversal = ({ value, keyIndex }) => {
@@ -48,11 +49,11 @@ const CalanderCellUniversal = ({ value, keyIndex }) => {
 
                     value.event.map((val, ind) => {
 
-                        console.log(val)
+                        // console.log(val)
 
                         return (
 
-                            <CalanderEvent key={ind} value={val} />
+                            <CalanderRegisterOnlyCell key={ind} value={val} />
 
                         );
                     })
