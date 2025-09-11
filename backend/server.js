@@ -179,7 +179,7 @@ app.post("/eventcreation", async (req, res) => {
         eventVenue: eventVenue,
         orgName: orgName,
         orgContact: orgContact,
-        registrationLink:registrationLink,
+        registrationLink: registrationLink,
         approved: false,
     })
 
@@ -278,16 +278,39 @@ app.get("/inbox", async (req, res) => {
 
 
 
-// event approval
+// event approval and unapproval
 app.post("/eventapprove", async (req, res) => {
 
     const { _id, approved } = req.body;
+
+
+    // if approved is null delete the event
+    if (approved === null) {
+        await event.findByIdAndDelete(_id);
+        res.json({
+            title: "Event Declined",
+            description:"Event successfully deleted",
+            status: "error",
+            isClosable: "true",
+            position: "top-right",
+            duration: 4000,
+        })
+    }
+
+    // if approved is true approve the event
     const eventApproval = await event.findById(_id);
 
     eventApproval.approved = true;
     await eventApproval.save();
 
-    res.send("")
+    res.json({
+        title: "Event Approved",
+        description: "The event has been successfully approved and is now visible to participants.",
+        status: "success",
+        isClosable: "true",
+        position: "top-right",
+        duration: 4000,
+    })
 })
 
 
